@@ -1,0 +1,77 @@
+
+/*
+var mike = new Person();
+
+var init_loc_on_screen = [230,50];
+var width_and_height_of_image_on_screen = [40,40];
+var image_name = "health_icon_1";
+var image_dimensions = [10,11,110,109];
+
+
+// gen_obj = new Gen_Obj(init_loc_on_screen,
+// 						  width_and_height_of_image_on_screen,
+// 						  image_name,
+// 						  image_dimensions);
+
+gen_obj = new Gen_Obj(init_loc_on_screen,
+						  image_name,
+						  image_dimensions);
+
+// console.log("Gen_Obj.h is: " + Gen_Obj.h);
+
+var box = new Stuff_Box();
+
+var up_button = new Gen_Button(300,50);
+up_button.set_sheet("button_set_1");
+
+var up_reg_x = 515;
+var up_reg_y = 117;
+var up_reg_w = 64;
+var up_reg_h = 64;
+var up_reg_dw = up_reg_w;
+var up_reg_dh = up_reg_h;
+
+up_button.set_reg_image(up_reg_x,up_reg_y,up_reg_w,up_reg_h,up_reg_dw,up_reg_dh);
+
+up_button.set_small_buttons_x_and_y();
+
+var up_clicked_x = 583;
+var up_clicked_y = 125;
+var up_clicked_w = 49;
+var up_clicked_h = 55;
+var up_clicked_dw = up_clicked_w;
+var up_clicked_dh = up_clicked_h;
+
+up_button.set_clicked_image(up_clicked_x,up_clicked_y,up_clicked_w,up_clicked_h,up_clicked_dw,up_clicked_dh);
+
+
+var inv_rect = new Inventory_Rectangle(10,15,15);
+
+// $('<canvas id="BLAHEY">').appendTo('#top');
+// $('#BLAHEY')[0].width = 50;
+// $('#BLAHEY')[0].height = 50;
+
+var c2 = document.getElementById("test_canvas2");
+
+// $('<canvas id="ZOOMY"></canvas>').appendTo('#top').width(50).height(60);
+$('<canvas id="ZOOMY"></canvas>').appendTo('#test_canvas');
+// var tmp = $('#ZOOMY');
+// tmp[0].width = 50;
+// tmp[0].height = 60;
+
+console.log("c2 is: ");
+console.log(c2);
+console.log("tmp is:");
+//console.log(tmp.get(0));
+*/
+
+var img_src = "http://i.imgur.com/RMkU0tL.png";
+var x_loc_from_image_canvas = 0;//-31;
+var y_loc_from_image_canvas = 0;//-48;
+var w = 33;
+var h = 49;
+
+var ssi_test_obj = new SSI(img_src,x_loc_from_image_canvas,y_loc_from_image_canvas,w,h);
+
+
+

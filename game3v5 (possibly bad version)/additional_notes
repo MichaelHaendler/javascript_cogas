@@ -1,0 +1,76 @@
+okay...
+
+so when I do a character/person. 
+
+I take the sheet, then select a section of it, and post it onto the general
+canvas. 
+
+what I want to do, is take the sheet, take the size of it, assign it to a variable, and
+then use that variable to post the image to the general canvas.
+
+to take things a step further, I want to just make the element on the fly, assign to 
+a variable, and then post to general canvas. 
+
+1) manually make canvas that you can call and that has all the properties you want. post
+that to a canvas. 
+
+2) manually make canvas that you can call and that has all the properties you want. assign
+it to a variable and post that to a canvas. 
+
+3) make canvas on the fly, assign to variable, post to canvas.
+
+
+-------------------------
+
+current idea
+
+build your canvas with the object picture on it (some sub section of a set of images or w/e), return that. 
+
+build your square (a section of a gray area?), post the image on that, return it. 
+
+take the square with the image on it (100% of it), and past that to the rectangle. 
+
+need to go back and test these things one at a time methinks 
+
+probably, build the canvas in the object, take the section of image, post image to that, and return that. 
+
+build the canvas for the square, get the object canvas as well, post 100% of that to the square, then 
+return the results 
+
+finally take the general canvas, post the square with the object in it to the canvas. 
+
+NOW....how to deal with this new object? 
+
+lol okay. array. each object that needs to be displayed gets put into it. for loop and print it to
+the screen. get the dimenion stuff (if needed) from the object itself. 
+
+the basic idea is going to have to be done anyway. Later on something more advanced will probably
+be needed. 
+
+going to have to work on button, object, and stuff_box to get this stuff working. 
+
+
+lol fuck it. start with gen object and the new canvas idea. 
+
+actually, no. 
+
+create a new (small) canvas, and draw it to the current canvas. 
+
+then try drawing a small thingy to that small canvas, and then take
+that small canvas with the thingy drawn to it, and draw that to the 
+general canvas. 
+
+then you're set. 
+
+gonna also need that array and method (should be pretty simple actually).
+
+=================================================
+
+array that stores all the items to be displayed. 
+
+item gets put into the array. then when array is ran it simply
+
+-iterates through all of the items, taking each item, and displaying it. 
+
+
+

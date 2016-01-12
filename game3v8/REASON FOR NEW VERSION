@@ -1,0 +1,99 @@
+3v8
+
+doing a new one because i'm debating about how to draw this stuff on the canvas, and that's going
+to effect how I write the code. 
+
+note to self about the decision about how to draw (and subsequently implement) the code.  
+
+x is ALWAYS supposed be relative to the MyCanvas canvas no matter what. the one and only
+difference should be that sometimes you're going to be drawing it on another canvas. In
+that case, you will have 2 other sets of variables called something like draw_at_x and draw_at_y,
+which outside of being set, will never be modified, and will only ever be used in a special
+draw_ssi method that takes in the canvas that the object in question should be drawn on. 
+
+I'm not entirely sure why the current code is working as well as it is. 
+
+but the idea is to go, set the stuff_box (and Gen_Obj class) so that they CAN (but
+not necessarily will)n use the draw_at_x and draw_at_y variables...and, yeah. 
+
+set them both to be using draw_at_x and draw_at_y. both should just hold the variables 
+and be used in the special draw method. 
+
+that being said, the actual x and y values should be relative to the MyCavas canvas. 
+
+make sure both of those things are going. properly. draw via draw_at_x and draw_at_y, but
+keep actual x and y working relative to MyCanvas. 
+
+once that stuff is drawing properly, then we can really go in and start debugging stuff. 
+
+and, hey, note! detection of percentages appears to be working correctly, and the item 
+is diappearing (as it should be). 
+
+need to look into drawing...but yeah!!! this is ever so slowly coming together! :-) 
+
+
+soo...HEH! 
+
+rule 3 and 4 are basically working. 
+
+have a bug with the gen_object. it's paremeter doesn't change to black when it's inside
+a stuff_box. 
+
+need to do: 
+
+make box for gun/health pack, etc. 
+
+make a box for armor. 
+
+also, close ("X") button to close the menu. 
+
+idea: 
+
+full screen video game. 
+
+if you want, you can have basically everything closed. 
+
+there will be a small icon in, say, either the upper right or lower right hand side
+of the screen. ss
+
+clicking that opens your characters bar, and all the tabs for all the various character
+
+fundamentally needed to get rule 2 working: 
+
+a person instance walking around. and a menu instance associated with that person. 
+
+an additional item. 
+
+additional item means having the array for additional items up and running. 
+
+
+(sighs) so to get rul 2 working, I need:
+
+person properly associated with the menu instance. 
+
+the array for dealing with multiple objects (may or may not be a pain)
+
+also, want the item to go back to being around the character even if it's
+just floating on the menu canvas itself. 
+
+also, items put into the array should be put in the end if they were just
+being dragged around, because they should be place down ontop of the other
+items that it is now being placed upon. 
+
+
+to do tomorrow: 
+
+get the dragging around working. (just need to update x and y methinks)
+
+maybe build the squares for armor and the like. 
+
+note: maybe the armor and gun box classes should be exactly the same. just
+in the creation, they get set to the types that they can hold. 
+
+when you try and put an object into it, the object has a type associated with it. 
+
+the box checks the type 
+
+if the type is not okay, the item gets dropped next to the character with whom
+the menu is being associated with.  
+

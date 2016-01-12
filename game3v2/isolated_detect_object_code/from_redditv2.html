@@ -1,0 +1,399 @@
+
+<!DOCTYPE HTML>
+<html>
+  <body>
+
+<canvas width="640" height="360"></canvas>
+
+
+ <script>
+/*
+ with this verion, I hope to be able to accidentally go outside the square, but for it to continue
+ to drag around properly. 
+
+ what I need it to do is: 
+
+ -see unclicked mouse go onto square (cant have it already being clicked) (works)
+
+ -left click on some point of it, and start dragging the square around every which way (works)
+
+ -(new) after you see the unclicked go onto the square, and then see a left click on the square...
+ the mouse no longer needs to be on the square for the dragging to work. also, need to record the
+ mouse events as they go along. and get the coords from that rather than directly from the mouse
+ itself. 
+
+
+
+*/
+function Rectangle(x, y, w, h) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.hover_but_no_click_before = false;
+	this.first_click_x =  null;
+	this.first_click_y =  null;
+	this.proper_click = false;
+}
+
+Rectangle.prototype.intersects = function(other) {
+
+	//if the upper left hand x coord is beyond the end of
+	//the big square (x being it's starting place, w taking us to the end)
+	//then there is no way we are inside 
+    if (this.x > other.x + other.w) {
+        return false;
+    }
+
+    //if the upper left hand y coord is lower then the bottom of the big square 
+    //(aka the y plus the h, taking us to the bottom) then there is no way that 
+    //it is within the square
+    if (this.y > other.y + other.h) {
+        return false;
+    }
+
+    //if the end of our square (aka our x plus our w) is less than the starter X
+    //for the big square, then there is no way we are inside. 
+    if (this.x + this.w < other.x) {
+        return false;
+    }
+
+    //if out bottom (aka our y plus h) is less than the upper left hand corner
+    //y of the big square, then there is no way that it is inside.  
+    if (this.y + this.h < other.y) {
+        return false;
+    }
+    return true;
+}
+
+Rectangle.prototype.mouse_intersects = function(mouse_x,mouse_y) {
+
+	//console.log('here');
+
+	//if the upper left hand x coord is beyond the end of
+	//the big square (x being it's starting place, w taking us to the end)
+	//then there is no way we are inside 
+    if (mouse_x > this.x + this.w) {
+
+    	//console.log("returning false on: (mouse_x > this.x + this.w) ");
+        return false;
+    }
+
+    //if the upper left hand y coord is lower then the bottom of the big square 
+    //(aka the y plus the h, taking us to the bottom) then there is no way that 
+    //it is within the square
+    if (mouse_y > this.y + this.h) {
+    	//console.log("returning false on: (mouse_y > this.y + this.h ");
+        return false;
+    }
+
+    //if the end of our square (aka our x plus our w) is less than the starter X
+    //for the big square, then there is no way we are inside. 
+    if (mouse_x < this.x) {
+    	//console.log("returning false on: (mouse_x < other.x)");
+        return false;
+    }
+
+    //if out bottom (aka our y plus h) is less than the upper left hand corner
+    //y of the big square, then there is no way that it is inside.  
+    if (mouse_y < this.y) {
+    	//console.log("returning false on: (mouse_y < other.y) ");
+        return false;
+    }
+
+    //console.log("returning true!!");
+    return true;
+};
+
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+
+var me = new Rectangle(20, 20, 30, 20);
+
+var x_value = canvas.width/2 - 120/2;//260
+var y_value = canvas.height/2 - 45/2;//157.5
+
+//var other = new Rectangle(x_value, y_value, 120, 45);
+
+var other = new Rectangle(100, 100, 120, 45);
+
+// var other = new Rectangle(0, 0, 120, 45);
+// other.x = canvas.width/2 - other.w/2;
+// other.y = canvas.height/2 - other.h/2;
+
+var mx = 0;
+var my = 0;
+var lmc = false; //left mouse click
+
+canvas.addEventListener('mousemove', function(e) {
+    mx = e.offsetX;
+    my = e.offsetY;
+}, false);
+
+canvas.addEventListener("mousedown", on_mouse_down, false);
+canvas.addEventListener("mouseup", on_mouse_up, false);
+
+function on_mouse_down(event){
+	if(event.button === 0){
+		lmc = true;
+		// console.log("down");
+	}
+};
+
+function on_mouse_up(event){
+	if(event.button === 0){
+		lmc = false;
+		// console.log("up");
+	}
+};
+
+//(for testing only) starting the mouse off a bit to the right of the square
+mx = 80;
+my = 28;
+
+function update() {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    //for holding the freaking thing. :-p 
+    // me.x = mx - me.w/2;
+    // me.y = my - me.h/2;
+    //run_fake_mouse();
+    me.drag_me(mx,my);
+
+    //console.log("lmc is: " + lmc);
+
+    
+    ctx.fillStyle = 'rgba(255, 127, 255, 0.75)';
+    ctx.fillRect(me.x, me.y, me.w, me.h);
+    
+    ctx.fillStyle = 'rgba(255, 255, 127, 0.75)';
+    ctx.fillRect(other.x, other.y, other.w, other.h);
+
+
+   // me: 0, 0, 30, 20
+   //other: 260, 157.5, 120, 45
+    if (me.intersects(other)) {
+        ctx.strokeStyle = '#c20';
+    } else {
+        ctx.strokeStyle = '#fff';
+    }
+    ctx.strokeRect(me.x, me.y, me.w, me.h);
+    ctx.strokeRect(other.x, other.y, other.w, other.h);
+    
+    window.requestAnimationFrame(update);
+}
+
+var first_step_completed = false;
+var second_step_completed = false;
+var third_step_completed = false;
+var finished_running_fake_mouse = false;
+
+function run_fake_mouse(){
+
+	// console.log("mx: " + mx);
+	// console.log("my: " + my);
+
+	if(!finished_running_fake_mouse){	
+
+		//move it over to roughly the center of the purple square
+		if(mx > 35 && !first_step_completed && !second_step_completed && !third_step_completed){
+			//console.log("here 1");
+			mx -= 1;
+
+		}
+		//a way to say that we can go to the next step. 
+		if(mx == 35 && !first_step_completed && !second_step_completed && !third_step_completed){
+			//console.log("mx is: " + mx);
+			first_step_completed = true;
+		}
+
+		//step 2, if the first step is completed, say that we're
+		//now left clicking on it, and say that this step is completed. 
+		if(first_step_completed && !second_step_completed && !third_step_completed){
+			//console.log("first_step_completed is finally true");
+			lmc = true; 
+			second_step_completed = true;
+		}
+
+		//now drag it downwards (by increasing it's value)
+		if(second_step_completed && !third_step_completed){
+
+			//console.log("second_step_completed FINALLY");
+
+			//increases it by 10 
+			if(my < 38){
+				my += 1;
+				//console.log("increasing my. my is now: " + my);
+			}
+
+			if(my == 38){
+				//console.log("got to 38 for my!");
+				//let go of the mouse 
+				lmc = false;
+				//say that this step is completed...
+				third_step_completed = true; 
+			}
+
+		}
+
+		//once I have gotten to where I want to be on the screen...
+		//move the mouse off of the object. 
+		if(third_step_completed){
+			//console.log("now incrementing my (in order to get the mouse of out there");
+			if(my < 70){
+				my += 1;
+			}
+			//console.log("(getting mouse out of there) my is now: " + my);
+
+			if(my == 70){ finished_running_fake_mouse = true;}
+		}
+
+	}
+
+};
+
+Rectangle.prototype.properly_clicked = function(mouse_x,mouse_y) {
+
+	if(this.hover_but_no_click_before && this.mouse_intersects(mouse_x,mouse_y)){
+		return true;
+	}
+
+	return false;
+}
+
+Rectangle.prototype.have_seen_proper_first_click_before = function() {
+
+	return this.first_click_x != null ? true : false;
+}
+
+//is true if we see a proper click. is only false when the mouse is no longer
+//being held down. 
+//var proper_click = false;
+
+Rectangle.prototype.drag_me = function(mouse_x,mouse_y) {
+
+	//console.log("lmc is: " + lmc);
+
+	//console.log("this.hover_but_no_click_before is: " + this.hover_but_no_click_before);
+
+	//console.log("this.mouse_intersects(mouse_x,mouse_y) is: " + this.mouse_intersects(mouse_x,mouse_y));
+
+	//if the mouse was over the box, but not clicking (this looks better)
+	if(this.mouse_intersects(mouse_x,mouse_y) && lmc == false){
+		this.hover_but_no_click_before = true;
+		//console.log("hover but no click");
+
+	}
+
+	//if there is no click, set first_click_x and first_click_x to null (aka clear them) (working!)
+	if(!lmc){
+
+		this.proper_click = false; //set to false only if there is no longer a click
+
+		//console.log("resetting first_click values");
+		this.first_click_x =  null;
+		this.first_click_y =  null;
+
+		//if they stopped holding down on the left mouse button AND moved off of the square, I don't
+		//want them to then have the error of moving off of the square AND THEN being able to just
+		//hold down the left mouse button, scroll over the square, and then all of a sudden be 
+		//accidentally dragging the square around. 
+		if(!this.mouse_intersects(mouse_x,mouse_y)){
+			this.hover_but_no_click_before = false;
+			//console.log("no longer over object");
+		}
+	}
+
+	//for testing only
+	//if(lmc){console.log("see click!");}
+
+	//works
+	//console.log("this.hover_but_no_click_before is: " + this.hover_but_no_click_before);
+
+	//if you are properly clicking on the square (in order to drag it)... 
+	//AND we've seen a proper first click before (by setting first_click_x and first_click_y
+	//to the mouse values)
+
+	var tmp = (this.properly_clicked(mouse_x,mouse_y) && this.have_seen_proper_first_click_before());
+	//console.log("tmp is: " + tmp);
+
+
+	if(this.have_seen_proper_first_click_before() || this.proper_click){
+	//if(this.properly_clicked(mouse_x,mouse_y) && this.have_seen_proper_first_click_before()){
+
+		this.proper_click = true;
+
+		// console.log("---------------------");
+		// console.log("this.x is: " + this.x);
+		// console.log("this.y is: " + this.y);
+		// console.log("this.first_click_x is: " + this.first_click_x);
+		// console.log("this.first_click_y is: " + this.first_click_y);
+		// console.log("mouse_x is: " + mouse_x);
+		// console.log("mouse_y is: " + mouse_y);
+
+
+		//difference between first click and upper left hand corner of object
+		//ie corner of square is (10,10) and first click was (24,30) aka (14,20)
+		var diff_x1 = this.first_click_x - this.x;
+		var diff_y1 = this.first_click_y - this.y;
+
+		// console.log("diff_x1 is: " + diff_x1);
+		// console.log("diff_y1 is: " + diff_y1);
+
+		//diff between the new location and the upper left hand corner of the object. 
+		//ie (45,30) - (10,10) = (35,20)
+		var diff_x2 = mouse_x - this.x;
+		var diff_y2 = mouse_y - this.y;
+
+		// console.log("diff_x2 is: " + diff_x2);
+		// console.log("diff_y2 is: " + diff_y2);
+	
+		//calculate differences neede to shift all the rest of the points of the square relative
+		//to where the user initially clicked.  
+		//ie (35,20) - (14,20) = (21,0)
+		//aka shift the whole thing over 21 on the x-axis. 
+		var change_x_by = diff_x2 - diff_x1;
+		var change_y_by = diff_y2 - diff_y1;
+
+		// console.log("diff_y1 is: " + diff_y1);
+		// console.log("diff_y1 is: " + diff_y1);
+
+		//update the x and y values.
+		this.x += change_x_by;
+		this.y += change_y_by;
+
+		// console.log("this.x is now: " + this.x);
+		// console.log("this.y is now: " + this.y);
+
+
+		//finally, set first_click_x and first_click_y to the current x and y values. 
+		//because then, on the next iteration of the code, if the mouse hasn't moved, 
+		//then all the values should stay the same. 
+		this.first_click_x = mouse_x;
+		this.first_click_y = mouse_y;
+
+		// console.log("this.first_click_x is now: " + this.first_click_x);
+		// console.log("this.first_click_y is now: " + this.first_click_y);
+
+
+	}
+	//if it was clicked on, and we haven't seen an initial click(aka both this.first_click_x and
+	//this.first_click_y are null)...set the values. 
+	else if(this.properly_clicked(mouse_x,mouse_y) && this.first_click_x == null){
+
+		this.first_click_x =  mouse_x;
+		this.first_click_y =  mouse_y;
+
+	}
+
+
+};
+
+update();
+
+    </script>
+	
+  </body>
+
+</html>

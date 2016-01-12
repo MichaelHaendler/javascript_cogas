@@ -1,0 +1,56 @@
+
+20,30
+
+10,10
+
+(10,20)
+
+---
+
+20,30
+
+45,30
+
+(25,0)
+
+-------------------
+
+45,30
+
+10,10
+
+(35,20)
+
+
+------
+
+(35,20) - (10,20) = (25,0) 
+
+
+------------------------------------------------------
+
+not unclicked!!!
+
+final: (39,18)
+
+(49,38)
+
+-------------------------------------------
+
+ideas for tomorrow: 
+
+1) isolate the "contains" code. make it its own little project. if you cant
+figure out the issues with detection, submit it as a question to reddit on
+their javascript section (make sure to turn it into a jfiddle first!)
+
+2: draw out square and make sure your calculations about moving it are correct. 
+
+3) once move and contains work properly, see about getting 
+
+4) make the correction to this.destination_width and 
+this.destination_height by renaming them to 
+this.display_size_width and this.display_size_height. 
+
+
+
+

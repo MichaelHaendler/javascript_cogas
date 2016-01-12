@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+  <body>
+	
+    <canvas id="myCanvas" width="1000" height="300">
+    <input type=text id=input_id />
+
+	<img id = "health_icon_1"src="http://i.imgur.com/7YpbDXC.png">
+	</canvas>	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<script src = "user_input.js"> </script>
+	<script src = "global_variables.js"> </script>
+	<script src = "write_to_screen.js"> </script>
+
+
+	<script src = "SSI.js"> </script>
+	<script src = "gen_object.js"> </script>
+
+	<script src = "mainLoop.js"> </script> 
+	
+
+	
+	<script>
+	
+		var ONE_FRAME_TIME = 130;
+		
+		setInterval( mainloop, ONE_FRAME_TIME );
+	
+    </script>
+	
+  </body>
+</html>
+

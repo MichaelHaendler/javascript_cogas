@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+  <body id="top">
+	<!--why did the image call ("<img src...") have to be within the canvas tag???-->
+	<!--http://png-1.findicons.com/files/icons/2118/nuvola/128/kcmdrkonqi.png-->
+
+    <canvas id="myCanvas" width="1000" height="500">
+    <canvas id="inventory_canvas" width="10" height="10">
+    <canvas id="test_canvas" width="1000" height="500">
+    <canvas id="test_canvas2" width="100" height="300">
+    <canvas id="inv_canvas" width="20" height="20">
+
+    <input type=text id =input_id/>
+
+    <img id = "person_set_1" src="http://i.imgur.com/RMkU0tL.png">
+	<img id = "health_icon_1"src="http://i.imgur.com/7YpbDXC.png">
+	<img id = "button_set_1"src="http://i.imgur.com/xaWKwZD.png">
+
+	<!--
+	<img id = "gun_icon_1"src="http://i.imgur.com/27hpPEx.png?1">
+	<img id = "item_column"src="http://i.imgur.com/u82EY9f.png">
+	<img id = "cci_color"src="http://i.imgur.com/R6lxcqD.png"> -->
+	<!--</canvas>	-->
+
+	<!--	
+	<script src = "Person.js"> </script>	
+	
+	-->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<script src = "user_input.js"> </script>
+	<script src = "global_variables.js"> </script>
+	<script src = "display_items.js"> </script>
+
+	<script src = "write_to_screen.js"> </script>
+
+	<!--place anywhere -->
+	<script src = "Drag_Bar.js"> </script> 
+
+	<!--place near the top -->
+	<script src = "SSI.js"> </script>
+
+	<!--must come after: SSI -->
+	<script src = "Multi_SSI.js"> </script>
+
+	<!-- 
+	<script src = "Gen_Character.js"> </script>
+	<script src = "Attr.js"> </script>
+	<script src = "Person.js"> </script>
+	-->
+
+
+
+	<!--I think it has to come after SSI...could be wrong though -->
+	<script src = "Gen_Obj.js"> </script>
+
+
+	<!--must come after Gen_Obj (after any/all objects in the game) -->
+	<script src = "Ground_Item_Displayer.js"> </script>
+
+	<!--must come after: Gen_Obj -->
+	<script src = "Stuff_Box.js"> </script>
+
+	<!--I think it has to come after SSI...could be wrong though -->
+	<!--<script src = "Gen_Button.js"> </script>-->
+
+	<script src = "Text_Button.js"> </script>
+
+	<!--must come after Stuff_Box -->
+	<script src = "Inventory_Rectangle.js"> </script>
+
+	<!-- 
+		must come after:
+		Stuff_Box
+		Inventory_Rectangle
+		Gen_Button  
+	-->
+	<script src = "Menu_Canvas.js"> </script>
+
+	<!-- must come after Menu_Canvas and all of the things that it must come after -->
+	<script src = "Menu.js"> </script>
+
+	<!--place anywhere -->
+	<script src = "Calc_Letter_Size.js"> </script>
+
+
+	<!--place anywhere -->
+	<script src = "Gen_Character.js"> </script>
+
+	<!--comes before person -->
+	<script src = "Attr.js"> </script>
+
+	<!--comes after:
+		SSI
+		Multi_SSI
+		Drag Bar
+		Button
+		Menu_Canvas
+		Menu
+		Gen_Character
+		Attr
+		probably Gen_Obj
+		probably needs to come after everything else, but 
+		before testing_objects and mainLoop.
+	-->
+	<script src = "Person.js"> </script>
+
+	<!-- before mainloop, but after everything else.-->
+	<script src = "testing_objects.js"> </script>
+
+	<!-- should always be the last thing in this list-->
+	<script src = "mainLoop.js"> </script> 
+	
+
+	
+	<script>
+	
+		var ONE_FRAME_TIME = 130;
+		
+		setInterval( mainloop, ONE_FRAME_TIME );
+	
+    </script>
+	
+  </body>
+</html>
+

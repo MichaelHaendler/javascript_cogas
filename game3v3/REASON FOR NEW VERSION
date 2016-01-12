@@ -1,0 +1,8 @@
+this version will have a bunch of files missing from it (that are in 3v2) that I had created
+specifically for building a detectable object. LOL...still have the same issue
+that I was having before about not detecting the object properly (areas that
+should be seen as part of the obj aren't, and areas that shouldn't be seen as 
+part of the obj, are).  
+
+it will also be the version where I will be building the inventory, and
+perhaps even the user interface. 

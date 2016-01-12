@@ -1,0 +1,7 @@
+
+3v6
+
+going to make it so that the class for each graphic (whatever it is) is holding the actual graphic.
+
+note: have the problem that sometimes the graphic isn't loading. no idea why. need to ask about it
+in reddit/r/javascript (or some forum like that).

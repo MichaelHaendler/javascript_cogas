@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+  <body>
+	<!--why did the image call ("<img src...") have to be within the canvas tag???-->
+	<!--http://png-1.findicons.com/files/icons/2118/nuvola/128/kcmdrkonqi.png-->
+	
+    <canvas id="myCanvas" width="1000" height="300">
+    <input type=text id=input_id />
+
+    <img id = "person_set_1" src="http://i.imgur.com/RMkU0tL.png">
+	<img id = "health_icon_1"src="http://i.imgur.com/7YpbDXC.png">
+
+	<!--
+	<img id = "gun_icon_1"src="http://i.imgur.com/27hpPEx.png?1">
+	<img id = "item_column"src="http://i.imgur.com/u82EY9f.png">
+	<img id = "cci_color"src="http://i.imgur.com/R6lxcqD.png"> -->
+	</canvas>	
+
+	<!--	
+	<script src = "Person.js"> </script>	
+	
+	-->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<script src = "user_input.js"> </script>
+	<script src = "global_variables.js"> </script>
+	<script src = "write_to_screen.js"> </script>
+
+
+	<script src = "SSI.js"> </script>
+	<script src = "Multi_SSI.js"> </script>
+	<script src = "Person.js"> </script>
+	<script src = "Gen_Obj.js"> </script>
+	<script src = "Stuff_Box.js"> </script>
+
+	<script src = "mainLoop.js"> </script> 
+	
+
+	
+	<script>
+	
+		var ONE_FRAME_TIME = 130;
+		
+		setInterval( mainloop, ONE_FRAME_TIME );
+	
+    </script>
+	
+  </body>
+</html>
+

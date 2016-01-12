@@ -1,0 +1,176 @@
+today i....
+
+wrote some more initial code for moving the graphic 
+
+got keyboard input working. 
+
+got the keys for moving right, left, up, down working
+
+got "detected whether or not the character is moving" working. 
+
+
+today I will...
+
+continue working on making the graphics change. :-) 
+
+note: after you get SSI and Multi_SSI properly up and working, transfer them to their respective files. 
+
+
+-----
+
+I got my characters to load properly. :-) 
+
+tomorrow...I will get the moving graphic to work. :-) 
+
+and probably the day after that...I will get it to move properly via the keyboard. 
+
+after that I will implement gen object
+
+and so on and so forth. 
+
+idea: 
+
+all input and stuff needed by the general "run" method will be put into an array. 
+at the top of each run method will be things like 
+
+var int_g_moved = 0;
+var moved = array_of_stuff[int_g_moved];
+
+our local "moved" method will then hold the true or false in regards to whether or not
+the object is moving 
+
+all the general inputs that a run will need will be like this. the array will grow a bit
+(who knows how big...though it wont be used as the general stack...I dont think) lol though
+if I DO use it like that...I'm going to rename it something like ksa (kitchen sink array) meaning
+it just holds EVERYTHING. 
+
+idea: have a stack that's constantly recording everything (for literally the last minute or two). if/when
+people hit bugs, you can use the stack to watch everything play out, and see what went wrong. 
+
+upper right is x 10, y 10
+
+mouse clicked on point x 25, y 30
+
+diff_x is 15
+
+diff_y is 20
+
+-----------
+
+move to right, new x point is 45
+
+diff from original x is 20
+
+so I took 20 - 15 is 5. add that to the original x. 
+
+:-) 
+
+move to left, x is now 23. 
+
+diff from original x is 13
+
+13 - 15 is -2.
+
+-2 + 10 is 8, ie I moved to the left. :-) 
+
+
+-----------------------------------------------------------------
+
+
+upper right is x 10, y 10
+
+mouse clicked on point x 25, y 30
+
+Gen_Obj.prototype.move = function(mouse_x,mouse_y,clicked){
+
+	//if clicked on the item (and we have already clicked on the item)
+	if(this.contains(mouse_x,mouse_y) && clicked && this.first_click_x != null && this.first_click_y != null){
+
+		//difference between first click and upper right hand corner of object
+		//ie corner is (10,10) and first click was (25,30) aka (15,20)
+		var diff_x1 = this.first_click_x - this.start_x;
+		var diff_y1 = this.first_click_y - this.start_y;
+
+		//diff between the first click and the new loc of the mouse
+		//ie (45,30) (aka the new mouse coords after you moved it right) - (25,30) aka (20,0) 
+		var diff_x2 = mouse_x - this.first_click_x;
+		var diff_y2 = mouse_y - this.first_click_y;
+
+		//difference between the two differences. 
+		//so with diff_x1 and diff_y1 you found the difference of distance between your mouse and the corner of
+		//the object. With diff_x2 and diff_y2 you found the difference, distance wise betwen the current 
+		//mouse position and the previous one. by knowing the initial difference between the mouse and the 
+		//corner, and the change between the previous mouse and the current one, you're able to allow the
+		//user to "grab hold" of the object and drag it around. that is to say, the user, while holding down
+		//the "click" button on the object, will be able to have all of the points of the object shift/move
+		//the exact same way regardless of where the user initially clickes on the object. :-)  
+		var change_x_by = diff_x2 - diff_x1;
+		var change_x_by = diff_y2 - diff_y1;
+
+		this.start_x += change_x_by;
+		this.start_y += change_y_by;
+
+
+	}
+	else if(this.contains(mouse_x,mouse_y) && clicked && this.first_click_x != null && this.first_click_y != null){
+
+		this.first_click_x =  mouse_x;
+		this.first_click_y =  mouse_y;
+
+	}
+
+};
+
+
+------------------------------------------
+
+idea: 
+
+there will be an interface called something like User_Interface
+
+which will be associated with the user. 
+
+each character on the screen will have a boolean called something
+like "controllable", which, if true, can be controlled by the user. 
+
+pro: every character (including your own) would be exactly the same. 
+
+con: code might get a little kray-kray in size. 
+
+idea! 
+
+in game during fighting, if the characters are close enough, the user
+will be told so, and the 2 or more characters can exchange items with
+little to no repercussions on terms of their action points. 
+
+idea: 
+
+when a person hovers over an item...the name of the item pops up over it. 
+also...if you have 2 or more items overlapping...a menu pops up that allows
+you to just take the items easily. 
+
+in order to do the hover...I need to implement submenu first ;-) 
+
+
+
+thoughts: 
+
+make a square (Stuff_Box) that you can drag things into and out of (big deal! seriously!)
+
+the inventory rectangle (part that actually holds the items) will then be made up of a 
+bunch of instances of that. 
+
+that might be it's own thing. And called something like "Inventory_Rectangle"
+
+there also needs to be a spot for armor called "Wearables_Box" that will only accept items
+if they are wearable. 
+
+there also needs to be "Items_Box" which will hold basically anything that isn't armor. 
+
+there might be a version of this called "Exclude_Box" which is a box with the extra feature
+of being able to exclude stuff (might just be built into Stuff_Box)
+
+then...the spots on the general 
+
+
+

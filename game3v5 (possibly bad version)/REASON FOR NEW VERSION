@@ -1,0 +1,28 @@
+
+3v3
+this version will have a bunch of files missing from it (that are in 3v2) that I had created
+specifically for building a detectable object. LOL...still have the same issue
+that I was having before about not detecting the object properly (areas that
+should be seen as part of the obj aren't, and areas that shouldn't be seen as 
+part of the obj, are).  
+
+it will also be the version where I will be building the inventory, and
+perhaps even the user interface. 
+
+3v4
+
+so I actually got stuff_box working in 3v3. I'm so stoked about that, that I'm making this new version
+just in case I fuck something up and want to easily be able to go back and get my original 
+version of it. 
+
+didn't do user interface or inventory in it or anything. I just got stuff_box working and have
+the (seemingly) fully working item. have an issue with getting stuff_box to detect items coming
+in front the right side of it. Not a huge issue though (everything else seems to work)
+
+
+3v5
+
+going to be doing some stuff with javascripts version of static in the gen_object class and I'm
+not sure how it's going to go. the reason that I am doing it at all (making the width and height
+of the objects in the game static) is so that I can just use the class itself to find out the height
+and width of an object when building the item_holder. 
