@@ -309,3 +309,10 @@ Terrain_Holder.prototype.get_array = function(){
 	return this.tss;
 
 };
+ 
+
+Terrain_Holder.prototype.get_ascii_map = function(){
+
+	return 
+
+};

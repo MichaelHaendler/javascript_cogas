@@ -203,5 +203,36 @@ Terrain_Holder.prototype.print_2d_array = function(){
 
 };
 
+Terrain_Holder.prototype.get_ascii_map = function(){
+
+	return this.ascii_tss;
+};
+
+
+Terrain_Holder.prototype.get_worldWidth = function(){
+
+	return (this.wos * this.tss.length);
+
+};
+
+
+Terrain_Holder.prototype.get_worldHeight = function(){
+
+	return (this.hos * this.tss[0].length);
+
+};
+
+Terrain_Holder.prototype.get_tileHeight = function(){
+
+	return this.tile_height;
+
+};
+
+
+Terrain_Holder.prototype.get_tileWidth = function(){
+
+	return this.tile_Width;
+
+};
 
 
