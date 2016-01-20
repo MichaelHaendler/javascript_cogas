@@ -1,0 +1,134 @@
+3v12
+
+am about to turn turn the environment 3d (since tss in terrain holder is about to gain
+it's 3rd dimension...z)
+
+will be renaming terrain_holder "Area_Holder" because it'll now be holding everything. 
+
+x = width
+
+y = length
+
+z = height
+
+start at 0 x, and go down y (0 to n-1)
+
+character will be accociated with the spot he is standing on. so that's where he will
+be in the array howeer, when drawn, his own x and y coords should be correct. 
+
+and so stuff should get drawn correctly. 
+
+so the heck with the 3d stuff. (yay!) actually no, because I need to draw grass. 
+
+so the character is figured out, but what about the rocks and gras and junk? 
+
+worried about later on, when I want to do somewhat proper 3d stuff. 
+
+how about I do this simpler version, with the extra dimension/array, and do the other thing
+later? 
+
+how would I want to implement it though? the thing later on.
+
+maybe what I said earlier. 
+
+I have z (which is height, we'll say it goes up to 10, that is 10 layers)
+
+each layer is a 2d array (x and y planes)
+
+in the name of efficiency...right now this argument makes it sound like what I was saying
+before makes the most sense. in a way we will have 2 sets of z axises. One is the main one
+that holds the 2d arrays. the other one...is something of a sub axis. basically each set
+of coords will have it's own z array. it will be a queue (last thing in, last thing out, 
+meaning if there was a pile, the last thing put ontop of the pile would be drawn at the 
+very top) and everything in those queues would be printed. 
+
+me sitting here talking to myself has been good, useful, and overall important :-)  
+
+lol...SO! 
+
+there will be 2 classes. 
+
+Area_Holder and Area_Layer
+
+I will be renaming Terrain_Holder Area_Layer (Area Holder will be the main z axis that
+hold instances of Area Layer). Area Holder will basically just deal with the input and output
+of the Area Layer instances...with the exception of Area Layer instances which contain very little
+within them. One example might be that the Area Layer instance contains nothing more than part of a rusty
+flight of stairs that take you from your current level to your next one. In that case there will be
+some 
+
+with all that said. :-) 
+
+-rename Terrain_Holder Area_Layer
+
+-make each slot in the array a queue (last in last out). display them in that order. 
+
+-need to adjust for placing them based on lower left corner rather than upper left corner. 
+(reason: )
+
+3v11
+
+the previous version (3v10) is starting to work. I need to fix the grass
+with terrain_block and dont know whats going to get changed...so I'm already
+moving on in case I break something. 3v10 doesn't contain any of what was mentioned
+on its to do list. but it is a good fallback. :-) 
+
+3v10
+
+with this version, I, at the very least, will: 
+
+be able to click at one spot, and have my character walk there. 
+
+will have grass, rocks, and possibly buildings. 
+
+might also do the other stuff. including: 
+
+user gui 
+
+bad guys 
+
+dialouge. 
+
+3v9
+
+doing a new version because I have to fix the issues of the color square remaining in the 
+stuff_box instance even after I take out the item, and also have to fix the issue of the
+items not really being draggable after I put an item into the stuff_box instance.
+
+LOL! well...holy shit. better lucky than smart. Apparently the error with the item not
+really being draggable stemed from my new display items code. found out by accident. totally
+happy about the results. 
+
+that shit is working. 
+
+I needed it to do rule 2 
+
+the yellow box needs to be fixed. and so does the button. and the invisible box for the inventory
+rect. 
+
+those 3 things will be done after rule 2. 
+
+notes and general writings: 
+
+give man an instance of menu. 
+
+have that working. (should)
+
+--man has location on screen
+
+--pass that (and w and h) to menu 
+
+--menu passes that to inventory_rect 
+
+--inventory_rect passes that to an item any time 
+rule 2 is called 
+
+-------------------------
+
+put in w and h into person 
+
+pass those values to menu
+
+menu to rect
+
+rect to square whenever rule 2 (for where to post item)

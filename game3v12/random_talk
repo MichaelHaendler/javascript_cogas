@@ -1,0 +1,13 @@
+to do today: 
+
+why dont I implement the feature where each square is an object. and
+that square turns yellow when the mouse is ontop of it. note though that
+clicking on the square shouldn't change its color or anything. 
+
+need a general terrain class for holding the whole thing. 
+
+need a need the general square terrain obj. and it will have a number
+associated with it that will represent whether it can be walked on or not. 
+it will also have the f, g, and all other values needed. 
+
+have it hold 
