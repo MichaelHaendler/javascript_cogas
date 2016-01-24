@@ -113,6 +113,9 @@ function Terrain_Square(x,y,w,h,type,which_sprite_array,name_of_sprite_sheet){
 
 	this.ssi = new SSI();
 
+	this.loc_of_image_x = which_sprite_array[0];
+	this.loc_of_image_y = which_sprite_array[1];
+
 	this.ssi.set_x_y_w_h_dw_and_dh(which_sprite_array[0],
 								   which_sprite_array[1],
 								   which_sprite_array[2],
@@ -121,84 +124,62 @@ function Terrain_Square(x,y,w,h,type,which_sprite_array,name_of_sprite_sheet){
 								   this.h
 								   );
 
+
+
 	//terrain block array. Holds what parts of the items can be walked over/behind (0)
 	//and what parts can't (1)
 	this.tba = [];
 	this.ascii_tba = [];
 
-
-	// var tmp_row = [];
-
-	// //fill the row with a walkable area 
-	// for(var i = 0; i < this.w; i++){
-	// 	tmp_row[i] = 0;
-	// }
-
-	// //for each of the columns, put in a row of a walkable area. 
-	// //note: this is just a default value. any area where you want
-	// //the item not to be stepped on needs to be set manually.
-	// for(var i = 0; i < this.h; i++){
-	// 	this.tba[i] = tmp_row.splice(0);
-	// }
-
-	//////////////////
-
-	// console.log("this.tb_c_w is: " + this.tb_c_w);
-	// console.log("this.tb_c_w is: " + this.tb_c_w);
-
-	//
 	var start_at_x = this.array_loc_x;
 	var stop_at_x = this.array_loc_x + this.tb_c_w;
 	var start_at_y = this.array_loc_y;
 	var stop_at_y = this.array_loc_y + this.tb_c_h;
 
+	// var test_x = 0;
+	// var test_y = 0;
 
 	for(var x = start_at_x; x < stop_at_x; x++){
 
 		this.ascii_tba[x] = [];
 		this.tba[x] = [];
-
+		// console.log("test_x is: " + test_x);
+		// console.log("here, x is: " + x);
 		for(var y = start_at_y; y < stop_at_y; y++){
 
 			var tb_loc_x = x * this.tb_w;
 			var tb_loc_y = y * this.tb_h;
 
+			// console.log("test_y is: " + test_y);
+			// console.log("here, y is: " + y);
+			// console.log("tb_loc_x is: " + tb_loc_x);
+			// console.log("tb_loc_y is: " + tb_loc_y);
+
 			this.tba[x][y] = new Terrain_Block(tb_loc_x,tb_loc_y,type);
+
+			//the 'x - start_at_x' i *know* is bad. 
+			var image_chunk_x = (x - start_at_x) * this.loc_of_image_x;
+			var image_chunk_y = (y - start_at_y) * this.loc_of_image_y;
+
+			//each tb already knows how much of the image it needs (it's own width)
+			//but now it also knows which section of the image from the sprite sheet
+			//source is needed. 
+			this.tba[x][y].set_image_xy_chunks(image_chunk_x,image_chunk_y);
+
 			this.ascii_tba[x][y] = type;
+
+			//test_y++;
 		}
+
+		// test_x++;
+
+		// test_y = 0;
+
+		//console.log("-----------");
 
 	}
 
-	/*
-	for(var x = 0; x < this.tb_c_w; x++){
-
-		this.ascii_tba[x] = [];
-		this.tba[x] = [];
-		for(var y = 0; y < this.tb_c_h; y++){
-
-			var tb_loc_x = x * this.tb_w;
-			var tb_loc_y = y * this.tb_h;
-
-			this.tba[x][y] = new Terrain_Block(tb_loc_x,tb_loc_y,type);
-			this.ascii_tba[x][y] = type;
-		}
-
-	}
-	*/
-
-	// console.log("this.w is: " + this.w);
-
-	// //testing
-	// this.tba[0] = [];
-	// this.tba[1] = [];
-	// this.tba[2] = [];
-	// var tmp_x = 0;
-	// var tmp_y = 0;
-	// var tmp_type = 0;
-	// this.tba[0][0] = new Terrain_Block(tmp_x,tmp_y,tmp_type);
-	// this.tba[1][0] = new Terrain_Block(10,0,tmp_type);
-	// this.tba[2][0] = new Terrain_Block(20,0,tmp_type);
-
+	
 
 };
 
@@ -208,37 +189,60 @@ Terrain_Square.prototype.draw_ssi = function(){
 	//for testing only
 	this.contains_mouse_check();
 
-	ctx.drawImage(this.sprite_sheet,
-		this.ssi.start_of_ssi_x,
-		this.ssi.start_of_ssi_y,
-		this.ssi.s_width,
-		this.ssi.s_height,
-		this.x, 
-		this.y,
-		this.ssi.destination_width,
-		this.ssi.destination_height
-	);
 
-	if(this.contains_mouse){
+	for(var x = 0; x < this.tba.length; x++){
+		for(var y = 0; y < this.tba[x].length; x++){
 
-		pw.print("this.array_loc_x is: " + this.array_loc_x);
-		pw.print("this.array_loc_y is: " + this.array_loc_y);
-
-		ctx.beginPath();
-		
-		ctx.lineWidth="1";
-
-		//ctx.strokeStyle="yellow";
-
-		ctx.rect(this.x,
-				this.y,
+			ctx.drawImage(this.sprite_sheet,
+				this.tba[x][y].get_image_chunk_x(),
+				this.tba[x][y].get_image_chunk_y(),
+				this.tba[x][y].get_image_chunk_w(),
+				this.tba[x][y].get_image_chunk_h(),
+				this.tba[x][y].x, 
+				this.tba[x][y].y,
 				this.ssi.destination_width,
 				this.ssi.destination_height
-				);
+			);	
 
-		ctx.stroke();
-
+		}
 	}
+
+
+
+
+	// ctx.drawImage(this.sprite_sheet,
+	// 	this.ssi.start_of_ssi_x,
+	// 	this.ssi.start_of_ssi_y,
+	// 	this.ssi.s_width,
+	// 	this.ssi.s_height,
+	// 	this.x, 
+	// 	this.y,
+	// 	this.ssi.destination_width,
+	// 	this.ssi.destination_height
+	// );
+
+
+
+	// if(this.contains_mouse){
+
+	// 	pw.print("this.array_loc_x is: " + this.array_loc_x);
+	// 	pw.print("this.array_loc_y is: " + this.array_loc_y);
+
+	// 	ctx.beginPath();
+		
+	// 	ctx.lineWidth="1";
+
+	// 	//ctx.strokeStyle="yellow";
+
+	// 	ctx.rect(this.x,
+	// 			this.y,
+	// 			this.ssi.destination_width,
+	// 			this.ssi.destination_height
+	// 			);
+
+	// 	ctx.stroke();
+
+	// }
 
 	this.draw_containing_tb();
 
@@ -253,12 +257,12 @@ Terrain_Square.prototype.draw_containing_tb = function(){
 		var tmp_tb = this.get_containing_tb();
 
 		if(tmp_tb != null){
-			//pw.print("seeing it");
+			pw.print("seeing it----------");
 			tmp_tb.draw_ssi();
 		}
-		// else{
-		// 	pw.print("not seeing it");
-		// }
+		else{
+			pw.print("not seeing it");
+		}
 
 	}
 
@@ -300,6 +304,7 @@ Terrain_Square.prototype.draw_tb = function(){
 
 			var tmp_tb = this.tba[x][y];
 
+			pw.print("here???????");
 			tmp_tb.draw_ssi();
 
 			// if(tmp_tb.contains_mouse()){
@@ -352,6 +357,9 @@ Terrain_Square.prototype.add_boundaries = function(ba){
 
 	var stop_at_point = this.array_loc_x + ba.length;
 
+	// console.log("before: ")
+	// print_2d_array(this.ascii_tba);
+
 	for(var i = 0; i < ba.length; i++){
 
 		var loc = ba[i];
@@ -359,35 +367,15 @@ Terrain_Square.prototype.add_boundaries = function(ba){
 		var tmp_x = loc[0] + this.array_loc_x;
 		var tmp_y = loc[1] + this.array_loc_y;
 
-		// console.log("loc[0] is: " + loc[0]);
-		// console.log("loc[1] is: " + loc[1]);	
-
-		// console.log("tmp_x is: " + tmp_x);
-		// console.log("tmp_y is: " + tmp_y);
-		//console.log("")
-		// console.log("this.tba["+tmp_x+"] is: ");
-		// console.log(this.tba[tmp_x]);
-		// console.log("this.tba["+tmp_x+"]["+tmp_y+"] is: ");
-		// console.log(this.tba[tmp_x][tmp_y]);
-
-		// console.log("this.tba["+tmp_x+"]["+tmp_y+"] is: " + this.tba[tmp_x][tmp_y]);
-		// console.log("this.tba["+tmp_x+"]["+tmp_y+"].type is: " + this.tba[tmp_x][tmp_y].type);
-
-		//this.tba[tmp_x][tmp_y].type = 1;
-
-		// console.log("before");
-		// print_2d_array(this.ascii_tba);
-
 		this.tba[tmp_x][tmp_y].set_block_type(1);
 
 		this.ascii_tba[tmp_x][tmp_y] = 1;
 
-		// console.log("after");
-		// print_2d_array(this.ascii_tba);
-
-		//console.log("this.tba["+tmp_x+"]["+tmp_y+"].type NOW is: " + this.tba[tmp_x][tmp_y].type);
-
 	}
+
+	// console.log("after: ")
+	// print_2d_array(this.ascii_tba);
+
 };
 
 
@@ -433,95 +421,9 @@ Terrain_Square.prototype.get_ascii_terrain_block_type = function(x,y){
 	var adj_x = x + this.array_loc_x;
 	var adj_y = y + this.array_loc_y;
 
-	// console.log("x is: " + x);
-	// console.log("y is: " + y);
-	// console.log("adj_x is: " + adj_x);
-	// console.log("adj_y is: " + adj_y);
-
-
 	return this.ascii_tba[adj_x][adj_y];
-
-	// ex:
-	// this.x == 30
-	// x == 30
-	// array_x == 0 (works)
-	// this.x == 30
-	// x == 31
-	// array_x == 1 (works)
-
-	/*
-	console.log("---");
-	console.log("this.y is: " + this.y);
-	console.log("y is: " + y);
-
-	var array_x = x - this.x;
-	var array_y = y - this.y;
-
-	console.log("array_x is: " + array_x);
-	console.log("array_y is: " + array_y);
-
-	console.log()
-
-	console.log("this.ascii_tba[array_x][array_y] is: " + this.ascii_tba[array_x][array_y]);
-
-	// console.log("this.ascii_tba[array_x][array_y].type is: " + this.ascii_tba[array_x][array_y].type);
-
-	// return this.ascii_tba[array_x][array_y].type;
-
-	//console.log("this.ascii_tba[array_x][array_y].type is: " + this.ascii_tba[array_x][array_y]);
-
-	return this.ascii_tba[array_x][array_y];
-	*/
-	// console.log("----");
-
-	// console.log("this.ascii_tba.length is: " + this.ascii_tba.length);
-	// console.log("this.ascii_tba[x].length is: " + this.ascii_tba[x].length);
-	// console.log("this.ascii_tba[x][y] is: " + this.ascii_tba[x][y]);
 	
 };
-
-
-
-// Terrain_Square.prototype.print_2d_array = function(){
-
-// 	console.log("loc is: "+this.x+","+this.y);
-
-// 	// console.log("this.ascii_tba.length is: " + this.ascii_tba.length);
-
-// 	// console.log("this.ascii_tba[0].length is: " + this.ascii_tba[0].length);
-
-// 	var tmp_string = '\n' + "[" + '\n';
-
-// 	for(var x = 0; x < this.ascii_tba.length; x++){
-
-// 		tmp_string += "[";
-
-// 		for(var y = 0; y < this.ascii_tba[x].length; y++){
-
-// 			//check 1
-// 			var c1 = (y == this.ascii_tba[x].length -1) ? "" : ",";
-
-// 			var symbol = (this.ascii_tba[y][x] == null) ? 'n' : this.ascii_tba[y][x];
-
-// 			//tmp_string += world[y][x] + c1;
-
-// 			tmp_string += symbol + c1;
-
-// 		}
-
-// 		//check 2
-// 		var c2 = (x == this.ascii_tba.length -1) ? "]" : "],";
-
-// 		tmp_string += c2 + '\n';
-		
-// 	}
-
-// 	tmp_string += "];";
-
-// 	console.log(tmp_string);
-
-// };
-
 
 
 
@@ -546,3 +448,57 @@ Terrain_Square.prototype.get_ascii_terrain_block_type = function(x,y){
 // 1 horse sized surpository once every half hour on the hour. 
 
 // note to the code readers here.  
+
+
+//I think that the walking algorithm is going to be slower (makes sense) but the 
+//drawing might not be much slower. so keep working on getting that to work. 
+
+//work on getting a square to work (squares should be adjustable in size too. a big
+//job. dont forget that).
+
+//then (the above will take a while) work on getting squares to overlay other squares. 
+
+//when you hover over an area, all of the squares right there should light up.  
+
+//--get this working for a single square (and it highlights properly)
+//--then mess with dimensions of the object and make sure you can have
+//squares/rectangles of different sizes
+//--then go up to the add_squar and add_square_with_boundaries method 
+//actually, no. it might just work after I do the first two. I think 
+//I just need to make sure the stack stuff is working for each tb. 
+//as is, Area_Layer does the stack stuff. that's actually good. 
+//under the hood, we're going to have each tb section have its own 
+//stack. that way we can draw multiple things at the same place. 
+//the way this needs to work is...
+//we have tb which contains the type and info about it's location. 
+//we have ts which contains a 2d array of tbs which will vary based
+//on what is entered for w and h. ts also contains a contains_method
+//which should help speed up checks for stuff. ts also has a draw_ssi
+//that just uses all of its tbs to do the drawing. 
+//area_layer (probably should go back to it being called terrain_holder
+//since I think I decided to just have it hold the terrain and nothing
+//else after all) should go back to what it was in v12. that is to say, no
+//stacks. no no no...
+// i see it! 
+//area_layer also has the 2d array. 
+//the width and height of the 2d array are relative to ter blocks rather than ter sqs.  
+//however, it will be terrain squares that will be inserted into those locations
+//also, each one of those "terrain block" locations will be stacks. 
+//so instead of have each location being based on some standard sized square, each one will
+//be a stack. 
+//when it comes to printing, we will have to go through the 2d array in area_layer. 
+//check if size is 0 (because plenty of the spots will be in fact empty, and will simply)
+//have a lot of areas that are being covered by other squares. 
+//so area layer has the queue after all (it's not a stack, it's a queue that I need to use).
+//how about printing? 
+//this brings us back to our original issue of images being drawn over others. frak. 
+//could basically delete terrain square. make it into more of a method. 
+//make an area_layer (soon to be terrain_holder again) instance. 
+//okay okay okay. 
+//area_layer has a 2d array relati
+
+//lol could redo this shit to a large degree. and like I said, get rid of terrain_Square
+//(at least for the most part). 
+//area square then has 2 arrays. the tba array and the ascii_tba. 
+//each tb will now have an ssi associated with it. 
+//iterate through your 2d array of queues, where said queues contain tbs. 

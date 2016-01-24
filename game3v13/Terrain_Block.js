@@ -24,7 +24,7 @@ Terrain_Block.h = 10;
 Terrain_Block.cannot_walk = 1;
 Terrain_Block.can_walk = 0;
 
-function Terrain_Block(x,y,block_type){
+function Terrain_Block(x,y,block_type,ss,ssi){
 
 	this.color = "blue";
 
@@ -40,7 +40,7 @@ function Terrain_Block(x,y,block_type){
 	// 	console.log("type is: " + this.type);
 	// }
 
-
+	//x and y should be both location in array AND location on screen (i think?)
 	this.x = x;
 	this.y = y;
 
@@ -54,15 +54,21 @@ function Terrain_Block(x,y,block_type){
 	// this.w = 10;
 	// this.h = 10;
 
-	
-
-
-
 	//so that these 4 values dont need to be calculated over and over again. 
 	this.ulc_x = this.x;
 	this.urc_x = this.x + this.w;
 	this.ulc_y = this.y;
 	this.llc_y = this.y + this.h;
+
+	this.image_chunk_x = null;
+
+	this.image_chunk_y = null;
+
+	// will probably be done along the lines of: 
+	//var blah = new Terrain_Block(x,y,block_type,new SSI(...));
+	this.ssi = ssi;
+
+	this.sprite_sheet = ss;
 
 
 
@@ -90,38 +96,29 @@ Terrain_Block.prototype.get_block_type = function(){
 
 //not even a single still image. just a square. :-P 
 Terrain_Block.prototype.draw_ssi = function(){
-
-	//pw.print("tb this.color is: " + this.color);
-
-	// pw.print("(new Error).lineNumber is: " + (new Error).lineNumber);
-	// pw.print((new Error).lineNumber);
-	//console.log((new Error).lineNumber);
-
-	// var thisline = new Error().lineNumber
-
-	// console.log("this is: " + thisline);
-
-	//pw.print("getting into tb.draw_ssi()");
 	
 
-	pw.print("this.x is: " + this.x/Terrain_Block.w);
-	pw.print("this.y is: " + this.y/Terrain_Block.h);
-	// pw.print("this.w is: " + this.w);
-	// pw.print("this.h is: " + this.h);
 
-	pw.print("this.type is: " + this.type);
+	ctx.drawImage(this.sprite_sheet,
+		this.ssi.start_of_ssi_x,
+		this.ssi.start_of_ssi_y,
+		this.ssi.s_width,
+		this.ssi.s_height,
+		this.x, 
+		this.y,
+		this.ssi.destination_width,
+		this.ssi.destination_height
+	);
 
-	ctx.lineWidth= "1";
-	ctx.strokeStyle = this.color;
-	ctx.rect(this.x,this.y,this.w,this.h);
-	ctx.stroke();
+	if(this.contains_mouse()){
 
-	//ctx.strokeStyle = "yellow";
+		ctx.lineWidth= "1";
+		ctx.strokeStyle = this.color;
+		ctx.rect(this.x,this.y,this.w,this.h);
+		ctx.stroke();
 
-	// console.log("this.x is: " + this.x);
-	// console.log("this.y is: " + this.y);
-	// console.log("this.w is: " + this.w);
-	// console.log("this.h is: " + this.h);
+	}
+
 
 };
 
@@ -152,4 +149,30 @@ Terrain_Block.prototype.contains_mouse = function(){
 Terrain_Block.prototype.test = function(){
 
 	console.log("this is working?");
+};
+
+Terrain_Block.prototype.set_image_xy_chunks = function(x,y){
+
+	this.image_chunk_x = x;
+	this.image_chunk_y = y;
+};
+
+Terrain_Block.prototype.get_image_chunk_x = function(){
+
+	return this.image_chunk_x;
+};
+
+Terrain_Block.prototype.get_image_chunk_y = function(){
+
+	return this.image_chunk_y;
+};
+
+Terrain_Block.prototype.get_image_chunk_w = function(){
+
+	return Terrain_Block.w;
+};
+
+Terrain_Block.prototype.get_image_chunk_h = function(){
+
+	return Terrain_Block.h;
 };

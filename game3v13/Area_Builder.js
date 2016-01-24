@@ -64,7 +64,7 @@ function build_testing_area(){
 
 };
 
-th = build_testing_area();
+//th = build_testing_area();
 
 /*
 idea: 
@@ -124,5 +124,46 @@ issue for today: fixing grass so that I can put the elements anywhere that I wan
 I will put the same element in multiple squares. thats what I will do. 
 
 calculate where, and put them there. 
+
+//idea: 
+
+get rid of current setup (turn it off...will be turned back on later once everything is working).
+
+//get a square of grass working. (just upper left corner)
+//get a rock working (just upper left corner.)
+//get said rock to work on grass. 
+//draw a big thing of grass.
+//now here comes the big thing. 
+
+//need to get rid of the 3x3 stuff. need to make it dynamic. that a ground graphic (rock, 
+grass, etc) can be however big it basically wants to be. shift the graphic a little, and
+then work from there. 
+
+there will be squares...but they will be based on the object itself. not some pre-defined stuff. 
+
+
+
+
+after that, turn back on the other features. only now you will be able to draw the rocks
+right next to each other, and not have any issues I think :-) 
+
+make sure that tba exists and is being made relative to terrain blocks
+
+ohhh
+
+need to fix asci_tba because right now it aint printing for some reason. figure out the origin
+to that. 
+
+also: 
+
+reason why the rock wasn't painting before: 
+
+the rock was drawn. 
+
+then afterwards the spot that it was at, only had grass in it. 
+
+so grass was painted over the rock. 
+
+and that's the reason! :-) 
 
 */

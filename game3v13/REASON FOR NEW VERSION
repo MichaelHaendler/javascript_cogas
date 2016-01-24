@@ -1,3 +1,11 @@
+3v13
+
+gonna work on ts so that really just a controller of a 2d array of tb's. image will now
+be broken up into chuncks via tb. each tb will now hold an image_chunk_x image_chunk_y 
+image_chunk_w and image_chunk_h that will represent it's piece of the image. 
+
+in drawing, we will have 2 for loops that will refer to all of these tb's. 
+
 3v12
 
 am about to turn turn the environment 3d (since tss in terrain holder is about to gain
