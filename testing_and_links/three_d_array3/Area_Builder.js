@@ -1,71 +1,71 @@
 
 
-function build_testing_area(){
+// function build_testing_area(){
 
-	//NOTE: width and height here are both in terms of terrain blocks, and are used
-	//and are used to define how big the game canvas itself will be. 
+// 	//NOTE: width and height here are both in terms of terrain blocks, and are used
+// 	//and are used to define how big the game canvas itself will be. 
 
-	//terrain blocks across (x axis)
-	//var tba = 15;
-	var tba = 35;
-
-
-	//terrain blocks down (y axis)
-	var tbd = 15;
-
-	var tmp_th = new Terrain_Layer(tba,tbd);
-
-	//grass square terrain block width: number of terrain blocks
-	//wide a grass square is. 
-	var gs_tbw = 3;
-
-	//same as above, but for height. 
-	var gs_tbh = 3;
-
-	var name_of_sprite_sheet1 = "rock1";
-
-	var name_of_sprite_sheet2 = "grass_and_rocks_canvas";
-
-	var grass_sprite = [0,0,32,32];
-	var rock_sprite = [32,0,32,32];
-
-	//width of square.
-	//use accurate values rather than rounded. with the current setup, the code
-	//will auto round it anyways. 
-	var wos = 30;
-
-	//length of square
-	var los = 30;
-
-	//height of square
-	var hos = 30;
-
-	//add grass
-	for(var x = 0; x < tba; x += gs_tbw){
-
-		for(var y = 0; y < tba; y += gs_tbh){
-
-			tmp_th.add_square(x,y,wos,los,hos,grass_sprite,name_of_sprite_sheet2);
-
-		}
-
-	}
-
-	//add rocks
-	var ba = [[0,2],[1,2],[2,2]];
-	//var ba = [[0,0]];
-	tmp_th.add_square_w_boundaries(12,12,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
-	tmp_th.add_square_w_boundaries(12,15,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
-	tmp_th.add_square_w_boundaries(12,18,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
-	tmp_th.add_square_w_boundaries(00,01,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+// 	//terrain blocks across (x axis)
+// 	//var tba = 15;
+// 	var tba = 35;
 
 
-	return tmp_th;
+// 	//terrain blocks down (y axis)
+// 	var tbd = 15;
 
-};
+// 	var tmp_th = new Terrain_Layer(tba,tbd);
 
-th = build_testing_area();
-print_2d_array(th.get_ascii_map());
+// 	//grass square terrain block width: number of terrain blocks
+// 	//wide a grass square is. 
+// 	var gs_tbw = 3;
+
+// 	//same as above, but for height. 
+// 	var gs_tbh = 3;
+
+// 	var name_of_sprite_sheet1 = "rock1";
+
+// 	var name_of_sprite_sheet2 = "grass_and_rocks_canvas";
+
+// 	var grass_sprite = [0,0,32,32];
+// 	var rock_sprite = [32,0,32,32];
+
+// 	//width of square.
+// 	//use accurate values rather than rounded. with the current setup, the code
+// 	//will auto round it anyways. 
+// 	var wos = 30;
+
+// 	//length of square
+// 	var los = 30;
+
+// 	//height of square
+// 	var hos = 30;
+
+// 	//add grass
+// 	for(var x = 0; x < tba; x += gs_tbw){
+
+// 		for(var y = 0; y < tba; y += gs_tbh){
+
+// 			tmp_th.add_square(x,y,wos,los,hos,grass_sprite,name_of_sprite_sheet2);
+
+// 		}
+
+// 	}
+
+// 	//add rocks
+// 	var ba = [[0,2],[1,2],[2,2]];
+// 	//var ba = [[0,0]];
+// 	tmp_th.add_square_w_boundaries(12,12,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+// 	tmp_th.add_square_w_boundaries(12,15,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+// 	tmp_th.add_square_w_boundaries(12,18,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+// 	tmp_th.add_square_w_boundaries(00,01,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+
+
+// 	return tmp_th;
+
+// };
+
+// th = build_testing_area();
+// print_2d_array(th.get_ascii_map());
 
 /*
 idea: 
@@ -127,3 +127,79 @@ I will put the same element in multiple squares. thats what I will do.
 calculate where, and put them there. 
 
 */
+
+
+function build_testing_area_for_ah(){
+
+	//NOTE: width and height here are both in terms of terrain blocks, and are used
+	//and are used to define how big the game canvas itself will be. 
+
+	//terrain blocks across (x axis)
+	//var tba = 15;
+	var tba = 35;
+
+
+	//terrain blocks down (y axis)
+	var tbd = 15;
+
+	//var tmp_th = new Terrain_Layer(tba,tbd);
+	var tmp_ah = new Area_Holder(tba,tbd);
+
+	//grass square terrain block width: number of terrain blocks
+	//wide a grass square is. 
+	var gs_tbw = 3;
+
+	//same as above, but for height. 
+	var gs_tbh = 3;
+
+	var name_of_sprite_sheet1 = "rock1";
+
+	var name_of_sprite_sheet2 = "grass_and_rocks_canvas";
+
+	var grass_sprite = [0,0,32,32];
+	var rock_sprite = [32,0,32,32];
+
+	//width of square.
+	//use accurate values rather than rounded. with the current setup, the code
+	//will auto round it anyways. 
+	var wos = 30;
+
+	//length of square
+	var los = 30;
+
+	//height of square
+	var hos = 30;
+
+	var layer_0 = 0;
+
+	var layer_1 = 1;
+
+	//note: no boundaries for grass. 
+	//var boundaries = [];
+
+	//add grass
+	for(var x = 0; x < tba; x += gs_tbw){
+
+		for(var y = 0; y < tba; y += gs_tbh){
+
+			//tmp_ah.add_square(layer_0,x,y,wos,los,hos,grass_sprite,name_of_sprite_sheet2,boundaries);
+			tmp_ah.add_square(layer_0,x,y,wos,los,hos,grass_sprite,name_of_sprite_sheet2);
+
+		}
+
+	}
+
+	//add rocks
+	//var ba = [[0,2],[1,2],[2,2]];
+	// tmp_ah.add_square(layer_1,12,12,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+	// tmp_ah.add_square(layer_1,12,15,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+	// tmp_ah.add_square(layer_1,12,18,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+	//tmp_ah.add_square(layer_1,00,01,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+
+
+	return tmp_ah;
+
+};
+
+ah = build_testing_area_for_ah();
+//print_2d_array(ah.get_ascii_map());

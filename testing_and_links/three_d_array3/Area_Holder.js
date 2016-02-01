@@ -31,11 +31,15 @@ function Area_Holder(terrain_blocks_across,terrain_blocks_down){
 
 };
 
-Area_Holder.prototype.modify_square_on_layer = function(which_layer,
-														x,y,w,l,h,
-														which_sprite_array,
-														name_of_sprite_sheet,
-														ba){{
+Area_Holder.prototype.add_square = function(which_layer,
+											x,y,w,l,h,
+											which_sprite_array,
+											name_of_sprite_sheet,
+											ba){
+
+	if(ba == null){
+		ba = [];
+	}
 
 	if(this.z[which_layer] == null){
 		this.z[which_layer] = new Terrain_Layer(this.tbw,this.tbh);
@@ -45,37 +49,56 @@ Area_Holder.prototype.modify_square_on_layer = function(which_layer,
 
 	terr_layer.add_square_w_boundaries(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba);
 
+	var tmp_ts = terr_layer.get_copy_of_last_added_ts(x,y);
+
+	if(this.z.length < tmp_ts.get_layer_count()){
+
+		var new_height = tmp_ts.get_layer_count();
+
+		for(var i = this.z.length; i < new_height; i++){
+
+			//create the new terrain layer
+			var tmp_th = Terrain_Layer(this.tbw,this.tbh);
+
+			//set the new layer's acsii tss to the proper values. 
+			tmp_th.add_to_ascii_tss(tmp_ts);
+
+			//then finally add the new layer to z.  
+			this.z[i] = tmp_th;
+
+		}
+
+	}
+
 };
 
 //inserts layers that weren't (or couldn't be) properly filled in. 
-Area_Holder.prototype.fill_in_layers = function(){
+// Area_Holder.prototype.fill_in_layers = function(){
 
-
-};
+// };
 
 Area_Holder.prototype.draw_ssi = function(){
 
-	for(var i = 0; i < z.length; i++){
+	for(var i = 0; i < this.z.length; i++){
 
-		var terr_layer = z[i];
+		var terr_layer = this.z[i];
 
 		terr_layer.contains_mouse(mx,my);
 		terr_layer.draw_ssi();
 
 	}
 
+};
+
+Area_Holder.prototype.get_ascii_map = function(num){
+
+	if(num == null){
+		return this.z.shift();
+	}
+	else{
+		return this.z[num];
+	}
 
 };
 
-/*
-idea: 
 
-first, get the two layers working (the grass and the one rock)
-
-get it so that a person could walk behind, in front of, and to the sides
-of the rock, but not through the rock. 
-
-actually test this with a person character. 
-
-after that, work on only the layer that the character is on being shown. 
-*/

@@ -16,8 +16,9 @@ var mainloop = function (){
 
 	set_user_inputs();//get keyboard and mouse input from user
 
-	th.contains_mouse(mx,my);
-	th.draw_ssi();
+	// th.contains_mouse(mx,my);
+	// th.draw_ssi();
+	ah.draw_ssi();
 
 	//test_ts.draw_ssi();
 

@@ -30,7 +30,11 @@ var global_item = null;
 
 var gen_obj = null;
 
+//terrain holder
 var th = null;
+
+//area holder
+var ah = null;
 
 function print_2d_array(array){
 

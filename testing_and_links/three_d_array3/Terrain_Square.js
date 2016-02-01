@@ -8,8 +8,9 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 	//note: kinda needed the width and height of a block before any were defined. 
 	//so thats why I made the static variables. besides, a block shouldn't change 
 	//in size. 
-	this.tb_w = Terrain_Block.w;
-	this.tb_l = Terrain_Block.h;
+	this.tb_w = Terrain_Block.w;//thickness
+	this.tb_l = Terrain_Block.l;//how long/wide it is
+	this.tb_h = Terrain_Block.h;//height
 
 	//note: each terrain block is 10 by 10. in order to make sure that no terrain_square
 	//is either too big or too small to be properly filled with terrain_blocks, we are
@@ -18,6 +19,7 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 	//this is the ACTUAL width of the ts 
 	this.w = Math.round(w/this.tb_w) * this.tb_w;
 	this.l = Math.round(l/this.tb_l) * this.tb_l;
+	this.h = Math.round(h/this.tb_h) * this.tb_h;
 
 	//this is the ACTUAL width of the ts 
 	// this.w = w * this.tb_w;
@@ -27,9 +29,10 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 	this.array_loc_x = x;
 	this.array_loc_y = y;
 
-	//this represents the number of terrain blocks wide this terrain square is. 
+	//array_w represents the number of terrain blocks wide this terrain square is. 
 	this.array_w = Math.round(w/this.tb_w);
 	this.array_l = Math.round(l/this.tb_l);
+	this.array_h = Math.round(h/this.tb_h);
 
 	// //this represents where this terrain square REALLy goes on the canvas
 	// this.x = x * this.w;
@@ -44,11 +47,14 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 
 	//dont need instance here (could have used Terrain_Square.ts_w) but this is simpler. 
 
-	//terrain block count wide. aka how many terrain blocks across in this terrain square
+	//terrain block count wide. aka how many terrain blocks down/vertically in this terrain square
+
 	this.tb_c_w = this.w / this.tb_w;
 
-	//terrain block count high. aka how many terrain blocks down/vertically in this terrain square
+	//terrain block count long. aka how many terrain blocks across in this terrain square
 	this.tb_c_l = this.l / this.tb_l;
+
+	this.tb_c_h = this.h / this.tb_h;
 
 
 	//for iterating through the array. 
@@ -123,16 +129,19 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 	}
 
 	///height stuff 
-	this.h = h;
+	//this.h = h;
 
 	//
 
 };
 
 
+
+
+
 //number of layers (in the 3d array) tall this terrain square is. 
 Terrain_Square.prototype.get_layer_count = function(){
-	return this.array_l;
+	return this.this.array_l;
 };
 
 

@@ -70,3 +70,18 @@ this version I will hopefully get the pseudo 3d stuff working.
 I think (maybe) verion 4 is where I will correct the width/length/height stuff. 
 
 after that...I dunno. getting the character into there I guess.  
+
+--------------
+
+/*
+idea: 
+
+first, get the two layers working (the grass and the one rock)
+
+get it so that a person could walk behind, in front of, and to the sides
+of the rock, but not through the rock. 
+
+actually test this with a person character. 
+
+after that, work on only the layer that the character is on being shown. 
+*/

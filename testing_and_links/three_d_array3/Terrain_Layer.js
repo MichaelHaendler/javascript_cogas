@@ -115,6 +115,10 @@ Terrain_Layer.prototype.add_square = function(x,y,w,l,h,which_sprite_array,name_
 
 	//build instance
 	var tmp_ts = new Terrain_Square(x,y,w,l,h,this.default_type,which_sprite_array,name_of_sprite_sheet);
+
+	//and add it to the layer. 
+	this.add_terr_sq_to_layer(x,y,tmp_ts);
+
 	//var tmp_ts = new Terrain_Square(x,y,this.wos,this.hos,type,which_sprite_array,name_of_sprite_sheet);
 
 	//this.tss[x][y] = tmp_ts;
@@ -123,20 +127,20 @@ Terrain_Layer.prototype.add_square = function(x,y,w,l,h,which_sprite_array,name_
 	// //if it doesn't equal to null that means there's an array there already. 
 	// //so push the current square onto it.
 	//if(this.tss[x][y].constructor == Array){
-	if(this.tss[x][y] != null){
-		console.log(this.tss[x][y]);
-		this.tss[x][y].push(tmp_ts);
-	}
-	else{
-		//else, if that location IS null, set it as an array, and push
-		//the terrain square onto it. 
-		this.tss[x][y] = [];
-		this.tss[x][y].push(tmp_ts);
-	}
+	// if(this.tss[x][y] != null){
+	// 	console.log(this.tss[x][y]);
+	// 	this.tss[x][y].push(tmp_ts);
+	// }
+	// else{
+	// 	//else, if that location IS null, set it as an array, and push
+	// 	//the terrain square onto it. 
+	// 	this.tss[x][y] = [];
+	// 	this.tss[x][y].push(tmp_ts);
+	// }
 
-	this.locs_of_terr_sqs.push([x,y]);
+	// this.locs_of_terr_sqs.push([x,y]);
 
-	this.add_to_ascii_tss(tmp_ts);	
+	// this.add_to_ascii_tss(tmp_ts);	
 
 };
 
@@ -149,18 +153,48 @@ Terrain_Layer.prototype.add_square_w_boundaries = function(x,y,w,l,h,which_sprit
 	//temp terrain square
 	var tmp_ts = new Terrain_Square(x,y,w,l,h,this.default_type,which_sprite_array,name_of_sprite_sheet);
 
-	console.log(name_of_sprite_sheet);
-	console.log(ba);
+	// console.log(name_of_sprite_sheet);
+	// console.log(ba);
 
 	//add boundaries to item 
 	tmp_ts.add_boundaries(ba);
 
+	this.add_terr_sq_to_layer(x,y,tmp_ts);
+
 	//this.tss[x][y] = tmp_ts;
+
+	// //if it doesn't equal to null that means there's an array there already. 
+	// //so push the current square onto it. 
+	// if(this.tss[x][y] != null){
+	// 	//console.log(this.tss[x][y]);
+	// 	this.tss[x][y].push(tmp_ts);
+	// }
+	// else{
+	// 	this.tss[x][y] = [];
+	// 	this.tss[x][y].push(tmp_ts);
+	// }
+
+	// this.locs_of_terr_sqs.push([x,y]);
+
+	// this.add_to_ascii_tss(tmp_ts);
+
+
+
+};
+
+Terrain_Layer.prototype.add_pre_made_terr_sq = function(ts){
+
+	this.add_terr_sq_to_layer(ts.x,ts.y,ts);
+
+};
+
+//helper code 
+Terrain_Layer.prototype.add_terr_sq_to_layer = function(x,y,tmp_ts){
 
 	//if it doesn't equal to null that means there's an array there already. 
 	//so push the current square onto it. 
 	if(this.tss[x][y] != null){
-		console.log(this.tss[x][y]);
+		//console.log(this.tss[x][y]);
 		this.tss[x][y].push(tmp_ts);
 	}
 	else{
@@ -171,8 +205,6 @@ Terrain_Layer.prototype.add_square_w_boundaries = function(x,y,w,l,h,which_sprit
 	this.locs_of_terr_sqs.push([x,y]);
 
 	this.add_to_ascii_tss(tmp_ts);
-
-
 
 };
 
@@ -421,6 +453,23 @@ Terrain_Layer.prototype.get_tileWidth = function(){
 	return this.tile_Width;
 
 };
+
+
+
+Terrain_Layer.prototype.get_copy_of_last_added_ts = function(x,y){
+
+	//get the array at that location
+	var tmp_array = this.ts[x][y];
+
+	//get the terrain square that was just added to that location
+	var tmp_ts = tmp_array[tmp_array.length - 1];
+ 
+	//and then return the number of terrain blocks tall this thing is. 
+	//return tmp_ts.get_layer_count();
+
+	return tmp_ts;
+};
+
 
 Terrain_Layer.prototype.testing = function(){
 
