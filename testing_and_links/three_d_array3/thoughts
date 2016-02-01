@@ -1,0 +1,72 @@
+
+(think this is already basically done. need to deal with the 3d layers
+though)
+-get terr square work (with block). make sure it's dynamic in its
+width and height (size needs to be in terms of terr blocks though)
+
+
+-terrain layer: is made up of terr blocks which is then filled with
+terr squares. not every terr block will actually be filled. will use
+for-in for this 
+
+-terrain holder (displaying ground)
+
+grass, rocks, etc need only inserted into ascii 3d array once
+
+-area_controller (displays everything), and says what part to display
+
+--character_controller
+has to keep up with all of the characters. which one is clicked on, which
+ones are where, etc. you initiate a character and insert it into 
+character_controller. 
+
+--ground_object_controller
+keep up with all of the objects on the ground
+
+--area_displayer
+what part of the ground to display
+
+implement these 3 parts, and combine them all into area_controller. 
+
+-------------------------
+
+today: 
+
+will make sure that the square are being added properly to terrain_layer
+
+also need to make sure that rock is being added properly to it. 
+
+grass is at layer 0. 
+
+person walks ontop of grass. thus layer 1 
+
+rock is sitting ontop of grass...thus layer 1 :-)
+
+------------------------------------------------------------------
+
+terr square already works
+
+need to get layer working. 
+
+grass is layer 0 and is set to zero 
+
+it is set to a specific t-block in the tba of terr layer. lots of blanks. 
+will use for in to go through them. 
+
+HOWEVER
+
+with ascii tba, ...it will fill in its proper location. 
+
+
+so make modifications to terr layer 
+
+as for rocks, that stuff is going to have to be manually done. because it all
+depends on how that stuff is drawn.  
+
+----------------------
+
+this version I will hopefully get the pseudo 3d stuff working.
+
+I think (maybe) verion 4 is where I will correct the width/length/height stuff. 
+
+after that...I dunno. getting the character into there I guess.  
