@@ -2,8 +2,8 @@
 
 function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 
-
-
+	//just for debugging (sprite sheet name)
+	this.ss_name = name_of_sprite_sheet;
 
 	//note: kinda needed the width and height of a block before any were defined. 
 	//so thats why I made the static variables. besides, a block shouldn't change 
@@ -78,6 +78,8 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 	this.color = "black";
 	this.type = type; //can it be walked on.
 
+	console.log("this.type is: " + this.type);
+
 	if(this.type == 0){
 		this.color = "yellow";
 	}
@@ -128,6 +130,12 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 
 	}
 
+	// console.log(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet);
+	// console.log("h is: " + h);
+	// console.log("type is: " + type);
+	// console.log("which_sprite_array is: " + which_sprite_array);
+	print_2d_array(this.ascii_tba);
+
 	///height stuff 
 	//this.h = h;
 
@@ -141,7 +149,7 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 
 //number of layers (in the 3d array) tall this terrain square is. 
 Terrain_Square.prototype.get_layer_count = function(){
-	return this.this.array_l;
+	return this.array_h;
 };
 
 

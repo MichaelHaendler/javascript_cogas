@@ -15,6 +15,6 @@ var name_of_sprite_sheet = "rock1";
 
 var tmp_type = 1;//cant be passed over. 
 
-test_ts = new Terrain_Square(x,y,wos,hos,type0,rock_sprite,name_of_sprite_sheet);
+// test_ts = new Terrain_Square(x,y,wos,hos,type0,rock_sprite,name_of_sprite_sheet);
 
-test_ts.set_type(tmp_type);
+// test_ts.set_type(tmp_type);

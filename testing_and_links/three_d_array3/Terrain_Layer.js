@@ -4,6 +4,10 @@
 
 function Terrain_Layer(terrain_blocks_across,terrain_blocks_down){
 
+	// console.log("terrain_blocks_across is: " + terrain_blocks_across);
+	// console.log("terrain_blocks_down is: " + terrain_blocks_down);
+
+
 
 	//terrain blocks wide: number of terrain blocks across x axis. 
 	this.tbw = terrain_blocks_across;
@@ -104,6 +108,38 @@ Terrain_Layer.prototype.init_ascii_tss = function(){
 
 		}
 	}
+
+};
+
+Terrain_Layer.prototype.new_Terrain_Square = function(x,y,w,l,h,type,
+													  which_sprite_array,
+													  name_of_sprite_sheet,ba){
+
+	// if(ba == null){
+	// 	ba = [];
+	// }
+
+	
+	//create it. 
+	//(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet)
+	var tmp_ts = new Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet);
+
+	//tmp_ts.add_boundaries(ba);
+
+	//add boundaries if need to
+	if(ba != null){
+		tmp_ts.add_boundaries(ba);
+	}
+
+
+
+	// print_2d_array(tmp_ts.ascii_tba);
+
+	//add it to the layer
+	this.add_terr_sq_to_layer(x,y,tmp_ts);
+
+	//and return it. 
+	return tmp_ts;
 
 };
 
@@ -235,7 +271,14 @@ Terrain_Layer.prototype.add_to_ascii_tss = function(tmp_ts){
 			var array_y = tmp_ts.array_loc_y + y;
 
 			if(this.ascii_tss[array_x][array_y] != non_replaceable_type){
+				//console.log("getting in here?");
+				// console.log("array_x is: " + array_x);
+				// console.log("array_y is: " + array_y);
+				// console.log("x is: " + x);
+				// console.log("y is: " + y);
 				this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(x,y);
+				// console.log("tmp_ts.get_ascii_terrain_block_type(x,y) is: " + tmp_ts.get_ascii_terrain_block_type(x,y));
+				// console.log("this.ascii_tss[array_x][array_y] is: " + this.ascii_tss[array_x][array_y]);
 			}
 
 			
@@ -245,7 +288,10 @@ Terrain_Layer.prototype.add_to_ascii_tss = function(tmp_ts){
 
 	//console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 	//right now you are getting the tb drawing to work when the ts isn't at 0,0
-	//print_2d_array(this.ascii_tss);
+
+	//where the freak is the number 141 coming from???? why is this method being ran that many times???
+	//console.log("after it was: ");
+	// print_2d_array(this.ascii_tss);
 };
 
 
@@ -458,8 +504,11 @@ Terrain_Layer.prototype.get_tileWidth = function(){
 
 Terrain_Layer.prototype.get_copy_of_last_added_ts = function(x,y){
 
+	// console.log("x is: " + x);
+	// console.log("y is: " + y);
+
 	//get the array at that location
-	var tmp_array = this.ts[x][y];
+	var tmp_array = this.tss[x][y];
 
 	//get the terrain square that was just added to that location
 	var tmp_ts = tmp_array[tmp_array.length - 1];

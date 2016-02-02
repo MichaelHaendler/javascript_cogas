@@ -129,7 +129,7 @@ calculate where, and put them there.
 */
 
 
-function build_testing_area_for_ah(){
+function build_testing_area_for_ah1(){
 
 	//NOTE: width and height here are both in terms of terrain blocks, and are used
 	//and are used to define how big the game canvas itself will be. 
@@ -168,7 +168,9 @@ function build_testing_area_for_ah(){
 	var los = 30;
 
 	//height of square
-	var hos = 30;
+	//var hos = 30;
+	var height_of_grass = 0;
+	var height_of_rock = 30;
 
 	var layer_0 = 0;
 
@@ -183,23 +185,122 @@ function build_testing_area_for_ah(){
 		for(var y = 0; y < tba; y += gs_tbh){
 
 			//tmp_ah.add_square(layer_0,x,y,wos,los,hos,grass_sprite,name_of_sprite_sheet2,boundaries);
-			tmp_ah.add_square(layer_0,x,y,wos,los,hos,grass_sprite,name_of_sprite_sheet2);
+			tmp_ah.add_square(layer_0,x,y,wos,los,height_of_grass,grass_sprite,name_of_sprite_sheet2);
 
 		}
 
 	}
 
+	console.log("first layer...with grass");
+	var tl = tmp_ah.z[0];
+	//print_2d_array(tl.ascii_tss);
+
 	//add rocks
-	//var ba = [[0,2],[1,2],[2,2]];
+	var ba = [[0,2],[1,2],[2,2]];
 	// tmp_ah.add_square(layer_1,12,12,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
 	// tmp_ah.add_square(layer_1,12,15,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
 	// tmp_ah.add_square(layer_1,12,18,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
-	//tmp_ah.add_square(layer_1,00,01,wos,los,hos,rock_sprite,name_of_sprite_sheet1,ba);
+	tmp_ah.add_square(layer_1,01,01,wos,los,height_of_rock,rock_sprite,name_of_sprite_sheet1,ba);
+
+
+	// console.log("second layer...only rock, obviously");
+	// var tl = tmp_ah.z[1];
+	// print_2d_array(tl.ascii_tss);
+
+	// console.log("third layer...again...obviously only with rock");
+	// var tl = tmp_ah.z[2];
+	// print_2d_array(tl.ascii_tss);
 
 
 	return tmp_ah;
 
 };
 
-ah = build_testing_area_for_ah();
+//ah = build_testing_area_for_ah1();
 //print_2d_array(ah.get_ascii_map());
+
+////////////////////////////////////////////////////////////////////////
+
+
+function build_testing_area_for_ah2(){
+
+	//NOTE: width and height here are both in terms of terrain blocks, and are used
+	//and are used to define how big the game canvas itself will be. 
+
+	//terrain blocks across (x axis)
+	//var tba = 15;
+	var tba = 35;
+
+
+	//terrain blocks down (y axis)
+	var tbd = 15;
+
+	//var tmp_th = new Terrain_Layer(tba,tbd);
+	var tmp_ah = new Area_Holder(tba,tbd);
+
+	//grass square terrain block width: number of terrain blocks
+	//wide a grass square is. 
+	var gs_tbw = 3;
+
+	//same as above, but for height. 
+	var gs_tbh = 3;
+
+	var name_of_sprite_sheet1 = "rock1";
+
+	var name_of_sprite_sheet2 = "grass_and_rocks_canvas";
+
+	var grass_sprite = [0,0,32,32];
+	var rock_sprite = [32,0,32,32];
+
+	//width of square.
+	//use accurate values rather than rounded. with the current setup, the code
+	//will auto round it anyways. 
+	var wos = 30;
+
+	//length of square
+	var los = 30;
+
+	//height of square
+	//var hos = 30;
+	var height_of_grass = 0;
+	var height_of_rock = 30;
+
+	var layer_0 = 0;
+
+	var layer_1 = 1;
+
+	var type = 0;
+
+	//note: no boundaries for grass. 
+	//var boundaries = [];
+
+	//add grass
+
+//(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet)
+	tmp_ah.add_square(layer_0,0,0,wos,los,type,height_of_grass,grass_sprite,name_of_sprite_sheet2);
+
+
+
+	//console.log("first layer...with grass");
+	var tl = tmp_ah.z[0];
+	print_2d_array(tl.ascii_tss);
+
+	//add rocks
+	var ba = [[0,2],[1,2],[2,2]];
+	tmp_ah.add_square(layer_1,01,01,wos,los,type,height_of_rock,rock_sprite,name_of_sprite_sheet1,ba);
+
+
+	console.log("second layer...only rock, obviously");
+	var tl = tmp_ah.z[1];
+	print_2d_array(tl.ascii_tss);
+
+	console.log("third layer...again...obviously only with rock");
+	var tl = tmp_ah.z[2];
+	print_2d_array(tl.ascii_tss);
+
+
+	return tmp_ah;
+
+};
+
+ah = build_testing_area_for_ah2();

@@ -32,33 +32,38 @@ function Area_Holder(terrain_blocks_across,terrain_blocks_down){
 };
 
 Area_Holder.prototype.add_square = function(which_layer,
-											x,y,w,l,h,
+											x,y,w,l,type,h,
 											which_sprite_array,
 											name_of_sprite_sheet,
 											ba){
 
-	if(ba == null){
-		ba = [];
-	}
-
+	//if that terrain layer doesn't exist, create it. 
 	if(this.z[which_layer] == null){
+		//console.log("got into here? once?");
 		this.z[which_layer] = new Terrain_Layer(this.tbw,this.tbh);
 	}
 
+	//get that layer
 	var terr_layer = this.z[which_layer];
 
-	terr_layer.add_square_w_boundaries(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba);
+	//create the terrain square...inserting it into the terrain layer as well as getting a copy of it. 
 
-	var tmp_ts = terr_layer.get_copy_of_last_added_ts(x,y);
+	//note: I know this is very very weird code...but I am doing it this way in order to keep
+	//where the definitions are for the various types of squares (0,1, etc) centalized. 
+	var tmp_ts = terr_layer.new_Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet,ba);
+
 
 	if(this.z.length < tmp_ts.get_layer_count()){
 
 		var new_height = tmp_ts.get_layer_count();
 
+		// console.log("tmp_ts.get_layer_count() is: " + tmp_ts.get_layer_count());
+		// console.log("tmp_ts.ss_name is: " + tmp_ts.ss_name);
+
 		for(var i = this.z.length; i < new_height; i++){
 
 			//create the new terrain layer
-			var tmp_th = Terrain_Layer(this.tbw,this.tbh);
+			var tmp_th = new Terrain_Layer(this.tbw,this.tbh);
 
 			//set the new layer's acsii tss to the proper values. 
 			tmp_th.add_to_ascii_tss(tmp_ts);
@@ -66,11 +71,20 @@ Area_Holder.prototype.add_square = function(which_layer,
 			//then finally add the new layer to z.  
 			this.z[i] = tmp_th;
 
+			//console.log("got here for some reason?");
+
 		}
 
 	}
 
+	//console.log("this.z.length is: " + this.z.length);
+
+
+	//print_2d_array(this.z[0]);
 };
+
+//note to self...if a rock gets blown up and destroyed, that rock needs to be removed, and then
+//the entire area needs to be remade. Or at least that little area does. 
 
 //inserts layers that weren't (or couldn't be) properly filled in. 
 // Area_Holder.prototype.fill_in_layers = function(){
