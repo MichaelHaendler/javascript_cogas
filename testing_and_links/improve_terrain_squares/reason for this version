@@ -1,0 +1,38 @@
+/*
+....
+
+so what's the idea here? 
+
+lol I think I kinda want to redo some stuff to a degree. 
+
+so what do I want to do? 
+
+okay okay I think I have this. 
+
+I will be making a new folder soon to fuck around with terrain square. 
+
+new ideas: 
+
+lol a lot to do. 
+
+fix the w,h,l stuff. 
+
+a rock has the width of one tb. has the length of 3 tbs. has the height of 3 tbs. 
+
+a layer of grass has the width of 3 tbs. has the length of 3 tbs. has the height of 0
+tbs (or is it 1? I'm not sure).
+
+only one method for setting up terrain square (though that note is for terrain layer)
+
+need to get the red and blue squares working on the rock. 
+
+rock (and really everything else) will only be defined by it's base. rock will be 1 row
+(of 3 tbs) long, and all together 3 rows high. thats all you should see of it on the print
+out. 
+
+and finally, on that note, need to set up the new format for barrier. from now on, barrier
+will be initiated along with the instantiation of a terrain square. though it will be its
+own method (not just some free floating code in the constructor).
+
+
+*/

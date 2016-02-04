@@ -222,7 +222,7 @@ function build_testing_area_for_ah1(){
 
 };
 
-ah = build_testing_area_for_ah1();
+//ah = build_testing_area_for_ah1();
 //print_2d_array(ah.get_ascii_map());
 
 ////////////////////////////////////////////////////////////////////////
@@ -282,8 +282,8 @@ function build_testing_area_for_ah2(){
 
 	//add grass
 
-//(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet)
-	tmp_ah.add_square(layer_0,0,0,wos,los,type,height_of_grass,grass_sprite,name_of_sprite_sheet2);
+
+	//tmp_ah.add_square(layer_0,0,0,wos,los,type,height_of_grass,grass_sprite,name_of_sprite_sheet2);
 
 
 
@@ -292,7 +292,16 @@ function build_testing_area_for_ah2(){
 	// print_2d_array(tl.ascii_tss);
 
 	//add rocks
-	var ba = [[0,2],[1,2],[2,2]];
+	//var ba = [[0,2],[1,2],[2,2]];
+
+	//d_array == double array. sometimes you might be dealing with something
+	//that you want to define for more than just 1 row at a time. 
+	var ba = [
+			{layer: 0, start_loc: [0,2], row_vals: [1,1,1], d_array: false},
+			{layer: 1, start_loc: [0,2], row_vals: [1,1,1], d_array: false},
+			{layer: 2, start_loc: [0,2], row_vals: [1,1,1], d_array: false}
+			];
+
 	tmp_ah.add_square(layer_1,01,01,wos,los,type,height_of_rock,rock_sprite,name_of_sprite_sheet1,ba);
 
 
@@ -309,4 +318,8 @@ function build_testing_area_for_ah2(){
 
 };
 
-//ah = build_testing_area_for_ah2();
+ah = build_testing_area_for_ah2();
+
+/*
+
+*/

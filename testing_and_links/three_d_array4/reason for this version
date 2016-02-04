@@ -1,0 +1,51 @@
+reason for version 4 is to make boundary area 3d. 
+
+for rock for instance, instead of being 
+
+[1,1,1] or whatever it is, will now be something like 
+
+//d_array == double array. sometimes you might be dealing with something
+//that you want to define for more than just 1 row at a time. 
+
+var ba = [
+{layer: 0, start_loc: [0,2], row_vals: [1,1,1], d_array: false},
+{layer: 1, start_loc: [0,2], row_vals: [1,1,1], d_array: false},
+{layer: 2, start_loc: [0,2], row_vals: [1,1,1], d_array: false}
+];
+
+could also be something though like: (this isn't right yet...but the
+idea is on track)
+
+[
+{layer: 0, start_loc: [0,2], row_vals: 
+[
+[1,1,1],
+[1,1,1],
+[1,1,1]]},
+
+{layer: 0, start_loc: [0,2], row_vals: 
+[
+[1,1,1],
+[0,0,0],
+[1,1,1]]},
+
+{layer: 0, start_loc: [0,2], row_vals: 
+[
+[1,1,1],
+[1,1,1],
+[1,1,1]]}
+]
+
+where in that second layer, with the zeros, is a hole that could
+be shot through. so your character could be on one side, and he sees
+the enemy on the other side, and then shoots through the hole and hurts/kills
+the enemy. :-) 
+
+
+note: to do in version 4 
+
+implement your new design. Will be cool because 
+it will allow for a lot more control over stationary objects that
+are in the way of the character
+
+then get rid of type. just have default type be 0. 

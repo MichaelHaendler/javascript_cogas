@@ -78,7 +78,7 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 	this.color = "black";
 	this.type = type; //can it be walked on.
 
-	console.log("this.type is: " + this.type);
+	//console.log("this.type is: " + this.type);
 
 	if(this.type == 0){
 		this.color = "yellow";
@@ -143,6 +143,8 @@ function Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet){
 
 	//barrier
 	this.ba = [];
+
+	this.default_type = 0;
 
 };
 
@@ -341,6 +343,8 @@ Terrain_Square.prototype.get_ascii_terrain_block_type = function(x,y){
 
 };
 
+/*
+//old
 Terrain_Square.prototype.add_boundaries = function(ba){
 
 	var start_at_point = this.array_loc_x;
@@ -367,3 +371,89 @@ Terrain_Square.prototype.add_boundaries = function(ba){
 	// print_2d_array(this.ascii_tba);
 
 };
+*/
+
+//new. :-) 
+
+// var ba = [
+// 		{layer: 0, start_loc: [0,2], row_vals: [1,1,1], d_array: false},
+// 		{layer: 1, start_loc: [0,2], row_vals: [1,1,1], d_array: false},
+// 		{layer: 2, start_loc: [0,2], row_vals: [1,1,1], d_array: false}
+// 		];
+Terrain_Square.prototype.add_boundaries = function(ba){
+
+	for(var obj of ba){
+
+		//get [1,1,1]
+		var row_vals = obj.row_vals;
+
+		//get 0 of [0,2]
+		var x = obj.start_loc[0];
+
+		//this will tell me on the x axis how far over on the screen this 
+		//tb starts. (used in for loop)
+		var tb_loc_x = start_loc_x * this.tb_w;
+
+		//get 2 of [0,2]
+		var start_loc_y = obj.start_loc[1];
+
+		//get where to stop (the starting spot and the ending spot)
+		var end = start_loc_y + row_vals.length;
+
+		//so y starts at 2, and goes up to 4 before stopping (or gets to 5 and
+		//doesn't complete the whole process)
+		for(var y = start_loc_y; y < end; y++){
+
+			//this tells me how far down the screen on the y axis  this tb starts 
+			var tb_loc_y = y * this.tb_l;
+
+			//0 should be thought of as be x - x. 
+			//for the y part...I need it to go "0,1,2,3...etc"
+			var type = row_vals[0][y - start_loc_y];
+
+			this.tba[x][y] = new Terrain_Block(tb_loc_x,tb_loc_y,Terrain_Block.cannot_walk);
+
+		}
+
+	}
+
+};
+
+/*
+....
+
+so what's the idea here? 
+
+lol I think I kinda want to redo some stuff to a degree. 
+
+so what do I want to do? 
+
+okay okay I think I have this. 
+
+I will be making a new folder soon to fuck around with terrain square. 
+
+new ideas: 
+
+lol a lot to do. 
+
+fix the w,h,l stuff. 
+
+a rock has the width of one tb. has the length of 3 tbs. has the height of 3 tbs. 
+
+a layer of grass has the width of 3 tbs. has the length of 3 tbs. has the height of 0
+tbs (or is it 1? I'm not sure).
+
+only one method for setting up terrain square (though that note is for terrain layer)
+
+need to get the red and blue squares working on the rock. 
+
+rock (and really everything else) will only be defined by it's base. rock will be 1 row
+(of 3 tbs) long, and all together 3 rows high. thats all you should see of it on the print
+out. 
+
+and finally, on that note, need to set up the new format for barrier. from now on, barrier
+will be initiated along with the instantiation of a terrain square. though it will be its
+own method (not just some free floating code in the constructor).
+
+
+*/
