@@ -122,14 +122,14 @@ Terrain_Layer.prototype.new_Terrain_Square = function(x,y,w,l,h,type,
 	
 	//create it. 
 	//(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet)
-	var tmp_ts = new Terrain_Square(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet);
+	var tmp_ts = new Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba);
 
 	//tmp_ts.add_boundaries(ba);
 
 	//add boundaries if need to
-	if(ba != null){
-		tmp_ts.add_boundaries(ba);
-	}
+	// if(ba != null){
+	// 	tmp_ts.add_boundaries(ba);
+	// }
 
 
 
@@ -187,13 +187,14 @@ Terrain_Layer.prototype.add_square_w_boundaries = function(x,y,w,l,h,which_sprit
 //Terrain_Layer.prototype.add_square_w_boundaries = function(x,y,type,which_sprite_array,name_of_sprite_sheet,ba){
 
 	//temp terrain square
-	var tmp_ts = new Terrain_Square(x,y,w,l,h,this.default_type,which_sprite_array,name_of_sprite_sheet);
+
+	var tmp_ts = new Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba);
 
 	// console.log(name_of_sprite_sheet);
 	// console.log(ba);
 
 	//add boundaries to item 
-	tmp_ts.add_boundaries(ba);
+	//tmp_ts.add_boundaries(ba);
 
 	this.add_terr_sq_to_layer(x,y,tmp_ts);
 
@@ -225,6 +226,7 @@ Terrain_Layer.prototype.add_pre_made_terr_sq = function(ts){
 };
 
 //helper code 
+//is the z layer...so no need for tss to be 3 dimensional. 
 Terrain_Layer.prototype.add_terr_sq_to_layer = function(x,y,tmp_ts){
 
 	//if it doesn't equal to null that means there's an array there already. 
@@ -337,6 +339,8 @@ Terrain_Layer.prototype.contains_mouse = function(x,y){
 
 
 Terrain_Layer.prototype.draw_ssi = function(){
+
+	this.contains_mouse(mx,my);
 
 	// this.tss[0][0].contains_mouse = true;
 	// this.tss[0][0].draw_ssi();

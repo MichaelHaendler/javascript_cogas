@@ -26,7 +26,7 @@ Terrain_Block.h = 10;
 Terrain_Block.cannot_walk = 1;
 Terrain_Block.can_walk = 0;
 
-function Terrain_Block(x,y,block_type){
+function Terrain_Block(z,x,y,block_type){
 
 	this.color = "blue";
 
@@ -42,7 +42,7 @@ function Terrain_Block(x,y,block_type){
 	// 	console.log("type is: " + this.type);
 	// }
 
-
+	this.z = z;
 	this.x = x;
 	this.y = y;
 
@@ -107,12 +107,12 @@ Terrain_Block.prototype.draw_ssi = function(){
 	//pw.print("getting into tb.draw_ssi()");
 	
 
-	pw.print("this.x is: " + this.x/Terrain_Block.w);
-	pw.print("this.y is: " + this.y/Terrain_Block.l);
+	// pw.print("this.x is: " + this.x/Terrain_Block.w);
+	// pw.print("this.y is: " + this.y/Terrain_Block.l);
 	// pw.print("this.w is: " + this.w);
 	// pw.print("this.l is: " + this.l);
 
-	pw.print("this.type is: " + this.type);
+	//pw.print("this.type is: " + this.type);
 
 	ctx.lineWidth= "1";
 	ctx.strokeStyle = this.color;

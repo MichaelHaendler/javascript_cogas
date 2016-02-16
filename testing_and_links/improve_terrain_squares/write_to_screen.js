@@ -62,4 +62,4 @@ display_phrases_list.prototype.print = function(blarg){
 	that.AddToList(blarg);
 }
 
-var pw = new display_phrases_list(700,20);
+var pw = new display_phrases_list(400,20);

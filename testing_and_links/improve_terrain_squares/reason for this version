@@ -35,4 +35,12 @@ will be initiated along with the instantiation of a terrain square. though it wi
 own method (not just some free floating code in the constructor).
 
 
+----------------
+
+thoughts: 
+
+check that the 3 arrays are where they need to be 
+
+then check that the tbs are being set to where they need to be set at. 
+
 */
