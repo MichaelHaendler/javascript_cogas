@@ -1,6 +1,20 @@
 
 
-function Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba){
+function Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba,which_layer){
+
+
+
+	//layer of this terrain square (rename terrain cube? or
+	//terrain obj, since it's not always a cube?) that we are currently
+	//looking at.
+	this.curr_layer = 0;
+
+	//curr_layer looks at the layers of the object. base_layer situates
+	//the terr sq someplace. 
+	//will be useful for when an object is on something like layer 1 or up. 
+	this.base_layer = which_layer;
+
+	this.ba = ba;
 
 	//just for debugging (sprite sheet name)
 	this.ss_name = name_of_sprite_sheet;
@@ -158,10 +172,14 @@ function Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba){
 	//barrier
 	//this.ba = [];
 
-	//layer of this terrain square (rename terrain cube? or
-	//terrain obj, since it's not always a cube?) that we are currently
-	//looking at. will usually just be the base.  
-	this.curr_layer = 0;
+
+
+};
+
+
+Terrain_Square.prototype.set_curr_layer = function(curr_layer){
+
+	this.curr_layer = curr_layer;
 
 };
 
@@ -1246,28 +1264,28 @@ Terrain_Square.prototype.draw_sq_around_ts = function(){
 
 Terrain_Square.prototype.draw_containing_tb = function(){
 
-	pw.print("moo?");
+	//pw.print("moo?");
 
 	this.contains_mouse_check();
 
 	if(this.contains_mouse){
 
-		pw.print("seeing it");
+		//pw.print("seeing it");
 
 		var tmp_tb = this.get_containing_tb();
 
 		if(tmp_tb != null){
-			pw.print("found a match");
+			//pw.print("found a match");
 			tmp_tb.draw_ssi();
 		}
-		else{
-			pw.print("not finding a match");
-		}
+		// else{
+		// 	pw.print("not finding a match");
+		// }
 
 	}
-	else{
-		pw.print("not seeing it")
-	}
+	// else{
+	// 	pw.print("not seeing it")
+	// }
 
 
 };
@@ -1346,11 +1364,11 @@ Terrain_Square.prototype.get_type = function(num){
 //only ever used this in testing. not actual code. 
 Terrain_Square.prototype.contains_mouse_check = function(){
 
-	pw.print("this.ulc_x is: " + this.ulc_x);
-	pw.print("this.urc_x is: " + this.urc_x);
+	// pw.print("this.ulc_x is: " + this.ulc_x);
+	// pw.print("this.urc_x is: " + this.urc_x);
 
-	pw.print("this.ulc_y is: " + this.ulc_y);
-	pw.print("this.llc_y is: " + this.llc_y);
+	// pw.print("this.ulc_y is: " + this.ulc_y);
+	// pw.print("this.llc_y is: " + this.llc_y);
 
 
 	var contains_x = (mx >= this.ulc_x && mx <= this.urc_x);
@@ -1383,27 +1401,153 @@ Terrain_Square.prototype.get_ascii_terrain_blocks = function(){
 };
 
 
+//get x location of this terrain square's loc on 
+Terrain_Square.prototype.get_x_loc_of_ts_on_tl_tb_array = function(x){
+
+	var which_layer = this.curr_layer + this.base_layer;
+
+	var layer = this.get_start_loc_for_layer(which_layer);
+
+	var adj_x = layer[0] + x + this.array_loc_x;
+
+	return adj_x;
+
+}
+
+Terrain_Square.prototype.get_y_loc_of_ts_on_tl_tb_array = function(y){
+
+	var which_layer = this.curr_layer + this.base_layer;
+
+	var layer = this.get_start_loc_for_layer(this.curr_layer);
+
+	var adj_y = layer[1] + y + this.array_loc_y;
+
+	return adj_y;
+
+}
 
 //30,31,32
 //when accessing these values, the upper left hand corner is 0,0. you ignore
 //the specific terrain square's location. this is to make debugging easier. 
-Terrain_Square.prototype.get_ascii_terrain_block_type = function(z,x,y){
+Terrain_Square.prototype.get_ascii_terrain_block_type = function(z,adj_x,adj_y){
 
-	var adj_x = x + this.array_loc_x;
-	var adj_y = y + this.array_loc_y;
+	// var adj_x = x + this.array_loc_x;
+	// var adj_y = y + this.array_loc_y;
 
-	console.log("adj_y is: " + adj_y);
+	
 
-	adj_y = 2;
+	//layer: the entire 2d array is not defined. some parts are and
+	//some parts aren't. that's where layer comes in. to say
+	//where the starter values are. 
+
+	//this.array_loc_x/this.array_loc_x: they are to keep track
+	//of how much the item has been moved up and down, back and
+	//forth by. 
+
+	//x/y: for iterating through all the locations
+
+	//last bit needs to set exactly where 
+
+	// var adj_x = layer[0] + x + this.array_loc_x;
+	// var adj_y = layer[1] + y + this.array_loc_y;
+
+	// console.log("z is: " + z);
+	// console.log("adj_x is: " + adj_x);
+	// console.log("adj_y is: " + adj_y);
+	// console.log("val is: " + this.ascii_tba[z][adj_x][adj_y]);
+	// console.log("----");
+
+	// console.log("y is: " + y);
+	// console.log("this.array_loc_y is: " + this.array_loc_y);
+	// console.log("===========");
+
+	// console.log("(should consistently be 2) adj_y is: " + adj_y);
+	//console.log("----");
+
+
+	//adj_y = 2;//temporary.
 
 
 	// console.log("this.ascii_tba[adj_x][adj_y] is:" + this.ascii_tba[adj_x][adj_y]);
 
 	// console.log("this.ascii_tba[0][adj_x][adj_y] is:" + this.ascii_tba[2][adj_x][adj_y]);
-
+	//debugger;
 	return this.ascii_tba[z][adj_x][adj_y];
 
+	//return this.get_certain_actual_element(z,adj_x,adj_y);
+
 };
+
+Terrain_Square.prototype.get_start_loc_for_layer = function(z){
+
+	console.log(this.ba);
+
+	for(var obj of this.ba){
+
+		if(obj.layer == z){
+			return obj.start_loc;
+		}
+	}
+
+	return null;
+}
+
+
+//not in use 
+Terrain_Square.prototype.get_certain_actual_element = function(z,x,y){
+
+	//two d array
+	var tda = this.ascii_tba[z];
+
+	var count_x = 0;
+	
+	for(var num1 in tda){
+
+		var tmp_array = tda[num1];
+
+		var count_y = 0;
+
+		for(var num2 in tmp_array){
+
+			if(count_x == x && count_y == y){
+				return tmp_array[num2];
+			}
+
+			count_y++;
+		}
+
+		count_x++;
+	}
+
+};
+
+	//////////////////////////////////////
+
+	//var x_start = -1;
+
+	// while(x_start < x){
+
+	// 	if(tda[x_start] != null){
+
+	// 		var y_start = -1;
+
+	// 		while(y_start < y){
+
+	// 			if(tda[x_start][y_start] != null){
+	// 				y_start++;
+	// 			}
+
+	// 			if(y_start == y){
+	// 				return tda[x_start][y_start];
+	// 			}
+
+	// 		}
+
+	// 		x_start++;
+	// 	}
+	// }
+
+
 
 /*
 //old

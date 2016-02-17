@@ -263,34 +263,35 @@ Terrain_Layer.prototype.add_to_ascii_tss = function(tmp_ts){
 	var z = this.which_layer;
 
 
+	//console.log("tmp_ts.array_l is: " + tmp_ts.array_l);
+
+	//a width of 3
 	for(var x = 0; x < tmp_ts.array_w; x++){
 
+		//a thickness of 1 tb. (so y only hits zero)
 		for(var y = 0; y < tmp_ts.array_l; y++){
 
 			//console.log("getting here?");
 
 			//tmp_ts.array_loc_x is the starting x loc for the object in the array
-			//x will iterate from something like 0 to 2
-			var array_x = tmp_ts.array_loc_x + x;
+			// //x will iterate from something like 0 to 2
+			// var array_x = tmp_ts.array_loc_x + x;
 
-			//same deal as with x and array_loc_x
-			var array_y = tmp_ts.array_loc_y + y;
+			// //same deal as with x and array_loc_x
+			// var array_y = tmp_ts.array_loc_y + y;
 
-			if(this.ascii_tss[array_x][array_y] != non_replaceable_type){
-				//console.log("getting in here?");
-				// console.log("array_x is: " + array_x);
-				// console.log("array_y is: " + array_y);
-				// console.log("x is: " + x);
-				// console.log("y is: " + y);
+			var array_x = tmp_ts.get_x_loc_of_ts_on_tl_tb_array(x);
 
-				console.log("tmp_ts.get_ascii_terrain_block_type(x,y) is:" + tmp_ts.get_ascii_terrain_block_type(x,y));
-				this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(z,x,y);
-				// console.log("tmp_ts.get_ascii_terrain_block_type(x,y) is: " + tmp_ts.get_ascii_terrain_block_type(x,y));
-				// console.log("this.ascii_tss[array_x][array_y] is: " + this.ascii_tss[array_x][array_y]);
-			}
+			var array_y = tmp_ts.get_y_loc_of_ts_on_tl_tb_array(y);
 
-			
-			//this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(x,y);
+			console.log("array_x is: " + array_x);
+			console.log("array_y is: " + array_y);
+
+			this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(array_x,array_y);
+
+			// if(this.ascii_tss[array_x][array_y] != non_replaceable_type){
+			// 	this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(z,x,y);
+			// }
 		}
 	}
 

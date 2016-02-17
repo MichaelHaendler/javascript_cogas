@@ -143,8 +143,8 @@ function build_testing_area1_2(){
 
 	var tmp_th = new Terrain_Layer(which_layer,tba,tbd);
 
-	var r_x = 0;
-	var r_y = 0;
+	var r_x = 1;
+	var r_y = 1;
 	var rock_wos = 30;
 	var rock_los = 10;
 	var rock_hos = 30; 
@@ -157,7 +157,17 @@ function build_testing_area1_2(){
 		];
 
 
-	tmp_th.add_square_w_boundaries(r_x,r_y,rock_wos,rock_los,rock_hos,rock_sprite,rock_sprite_sheet,rock_ba);
+	tmp_th.add_square_w_boundaries(r_x,
+								   r_y,
+								   rock_wos,
+								   rock_los,
+								   rock_hos,
+								   rock_sprite,
+								   rock_sprite_sheet,
+								   rock_ba,
+								   which_layer);
+
+	tmp_th.set_curr_layer(which_layer);
 
 // 	//grass square terrain block width: number of terrain blocks
 // 	//wide a grass square is. 
@@ -214,7 +224,7 @@ th = build_testing_area1_2();
 // print_2d_array_v2(th.get_ascii_map());
 //print_2d_array_v10(th.get_ascii_map());
 //print_2d_array_v11(th.get_ascii_map());
-print_2d_array_v12(th.get_ascii_map());
+print_2d_array(th.get_ascii_map());
 
 
 

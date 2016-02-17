@@ -807,6 +807,8 @@ function print_2d_array_v9(tda){
 
 function print_2d_array_v10(a){
 
+	//debugger;
+
 	console.log("a[0][0] is: " + (typeof a[0][0] === 'object'));
 
 	var s = "[\n";
@@ -897,5 +899,73 @@ function print_2d_array_v11(a){
 
 
 };
+
+
+function print_2d_array_v12(a){
+
+	console.log("a[0][0] is: " + a[0][0][2]);
+
+	//console.log("getting in here?");
+
+	var s = "[\n";
+
+	//character array 
+	var ca = [];
+
+	//tracker x and tracker y
+
+	for(var x = 0; x < a.length; x++){
+
+		for(var y = 0; y < a[x].length; y++){
+
+
+			if(ca[y] == null){
+				ca[y] = [];
+			}
+
+			var tmp_sym = (a[x][y] == null) ? 'n' : a[x][y];
+
+			ca[y][x] = (x == 0) ? ("[" + tmp_sym) : ("," + tmp_sym);
+
+			if(x == a.length - 1){
+				ca[y][x] = ("," + tmp_sym + "],\n");
+			}
+
+		}
+
+	}
+
+	for(var x = 0; x < ca.length; x++){
+
+		for(var y = 0; y < ca[x].length; y++){
+			s += ca[x][y];
+		}
+	}
+
+	s = s.substring(0, s.length -2);
+
+	s += "\n];";
+
+	console.log(s);
+
+
+};
+
+var a3 = [
+[1,2,3],
+[4,5,6],
+[7,8,9]
+
+];
+
+//1 4 7
+//2 5 8
+//3 6 9
+
+//print_2d_array_v12(a3);
+
+
+
+
 
 
