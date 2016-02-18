@@ -138,7 +138,8 @@ function Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba,whi
 
 	//console.log("============================================");
 
-	// console.log(ba);
+	//console.log(2);
+	//console.log(ba);
 	// console.log(ba[2].start_loc);
 
 	this.set_tb_design(x,y,ba);
@@ -240,6 +241,8 @@ Terrain_Square.prototype.set_tb_design = function(start_at_x,start_at_y,ba){
 	// console.log(ba[0]);
 
 	// console.log("ba.d_array is: " + ba[0].d_array);
+	//console.log(3);
+	//console.log(ba);
 
 	if(ba[0].d_array == true){
 		//console.log("2d");
@@ -1422,6 +1425,8 @@ Terrain_Square.prototype.get_y_loc_of_ts_on_tl_tb_array = function(y){
 
 	var adj_y = layer[1] + y + this.array_loc_y;
 
+	//console.log("adj_y is: " + adj_y);
+
 	return adj_y;
 
 }
@@ -1451,11 +1456,12 @@ Terrain_Square.prototype.get_ascii_terrain_block_type = function(z,adj_x,adj_y){
 	// var adj_x = layer[0] + x + this.array_loc_x;
 	// var adj_y = layer[1] + y + this.array_loc_y;
 
-	// console.log("z is: " + z);
+	//console.log("z is: " + z);
 	// console.log("adj_x is: " + adj_x);
 	// console.log("adj_y is: " + adj_y);
-	// console.log("val is: " + this.ascii_tba[z][adj_x][adj_y]);
 	// console.log("----");
+	// // console.log("val is: " + this.ascii_tba[z][adj_x][adj_y]);
+	
 
 	// console.log("y is: " + y);
 	// console.log("this.array_loc_y is: " + this.array_loc_y);
@@ -1472,6 +1478,7 @@ Terrain_Square.prototype.get_ascii_terrain_block_type = function(z,adj_x,adj_y){
 
 	// console.log("this.ascii_tba[0][adj_x][adj_y] is:" + this.ascii_tba[2][adj_x][adj_y]);
 	//debugger;
+	//z = 0;
 	return this.ascii_tba[z][adj_x][adj_y];
 
 	//return this.get_certain_actual_element(z,adj_x,adj_y);
@@ -1480,9 +1487,13 @@ Terrain_Square.prototype.get_ascii_terrain_block_type = function(z,adj_x,adj_y){
 
 Terrain_Square.prototype.get_start_loc_for_layer = function(z){
 
-	console.log(this.ba);
+	//console.log(this.ba);
+
+	//console.log("z is: " + z);
 
 	for(var obj of this.ba){
+
+		//console.log("obj.layer is: " + obj.layer);
 
 		if(obj.layer == z){
 			return obj.start_loc;
@@ -1493,33 +1504,33 @@ Terrain_Square.prototype.get_start_loc_for_layer = function(z){
 }
 
 
-//not in use 
-Terrain_Square.prototype.get_certain_actual_element = function(z,x,y){
+// //not in use 
+// Terrain_Square.prototype.get_certain_actual_element = function(z,x,y){
 
-	//two d array
-	var tda = this.ascii_tba[z];
+// 	//two d array
+// 	var tda = this.ascii_tba[z];
 
-	var count_x = 0;
+// 	var count_x = 0;
 	
-	for(var num1 in tda){
+// 	for(var num1 in tda){
 
-		var tmp_array = tda[num1];
+// 		var tmp_array = tda[num1];
 
-		var count_y = 0;
+// 		var count_y = 0;
 
-		for(var num2 in tmp_array){
+// 		for(var num2 in tmp_array){
 
-			if(count_x == x && count_y == y){
-				return tmp_array[num2];
-			}
+// 			if(count_x == x && count_y == y){
+// 				return tmp_array[num2];
+// 			}
 
-			count_y++;
-		}
+// 			count_y++;
+// 		}
 
-		count_x++;
-	}
+// 		count_x++;
+// 	}
 
-};
+// };
 
 	//////////////////////////////////////
 

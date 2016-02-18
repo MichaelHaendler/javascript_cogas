@@ -113,9 +113,9 @@ Terrain_Layer.prototype.init_ascii_tss = function(){
 
 };
 
-Terrain_Layer.prototype.new_Terrain_Square = function(x,y,w,l,h,type,
+Terrain_Layer.prototype.new_Terrain_Square = function(x,y,w,l,h,
 													  which_sprite_array,
-													  name_of_sprite_sheet,ba){
+													  name_of_sprite_sheet,ba,which_layer){
 
 	// if(ba == null){
 	// 	ba = [];
@@ -124,7 +124,13 @@ Terrain_Layer.prototype.new_Terrain_Square = function(x,y,w,l,h,type,
 	
 	//create it. 
 	//(x,y,w,l,h,type,which_sprite_array,name_of_sprite_sheet)
-	var tmp_ts = new Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba);
+
+	//(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba,which_layer)
+
+	//console.log("1");
+	//console.log(ba);
+
+	var tmp_ts = new Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba,which_layer);
 
 	//tmp_ts.add_boundaries(ba);
 
@@ -190,7 +196,7 @@ Terrain_Layer.prototype.add_square_w_boundaries = function(x,y,w,l,h,which_sprit
 
 	//temp terrain square
 
-	var tmp_ts = new Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba);
+	var tmp_ts = new Terrain_Square(x,y,w,l,h,which_sprite_array,name_of_sprite_sheet,ba,this.which_layer);
 
 	// console.log(name_of_sprite_sheet);
 	// console.log(ba);
@@ -262,6 +268,8 @@ Terrain_Layer.prototype.add_to_ascii_tss = function(tmp_ts){
 
 	var z = this.which_layer;
 
+	//console.log("z here is: " + z);
+
 
 	//console.log("tmp_ts.array_l is: " + tmp_ts.array_l);
 
@@ -284,10 +292,10 @@ Terrain_Layer.prototype.add_to_ascii_tss = function(tmp_ts){
 
 			var array_y = tmp_ts.get_y_loc_of_ts_on_tl_tb_array(y);
 
-			console.log("array_x is: " + array_x);
-			console.log("array_y is: " + array_y);
+			// console.log("array_x is: " + array_x);
+			// console.log("array_y is: " + array_y);
 
-			this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(array_x,array_y);
+			this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(z,array_x,array_y);
 
 			// if(this.ascii_tss[array_x][array_y] != non_replaceable_type){
 			// 	this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(z,x,y);
@@ -406,6 +414,8 @@ Terrain_Layer.prototype.draw_ssi = function(){
 
 	//get a loc where something was drawn. 
 	for(var point of this.locs_of_terr_sqs){
+
+		//console.log("point: " + point);
 
 		//get the actual x y vals
 		var x = point[0];

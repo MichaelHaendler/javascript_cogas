@@ -39,6 +39,14 @@ var ah = null;
 
 function print_2d_array(a){
 
+	//console.log(a);
+
+	//debugger;
+
+	// console.log("(how many columns does this one 2d layer have?) a.length is: " + a.length);
+
+	// console.log("(how many 'things' are in that one column?) a[0].length is: " + a[0].length);
+
 	//console.log("a[0][0] is: " + a[0][0][2]);
 
 	//console.log("getting in here?");
@@ -89,13 +97,15 @@ function print_2d_array(a){
 
 function print_3d_array(three_d_array){
 
+	//console.log("(how many layers) three_d_array.length is: " + three_d_array.length);
+
 	console.log("printing 3d layers.");
 
 	for(var two_d_plane in three_d_array){
 
 		console.log("layer: " + two_d_plane);
 
-		print_2d_array_v2(three_d_array[two_d_plane]);
+		print_2d_array(three_d_array[two_d_plane]);
 
 		console.log("-------------");
 

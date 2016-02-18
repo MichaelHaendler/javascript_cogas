@@ -143,8 +143,8 @@ function build_testing_area1_2(){
 
 	var tmp_th = new Terrain_Layer(which_layer,tba,tbd);
 
-	var r_x = 1;
-	var r_y = 1;
+	var r_x = 3;
+	var r_y = 2;
 	var rock_wos = 30;
 	var rock_los = 10;
 	var rock_hos = 30; 
@@ -167,7 +167,7 @@ function build_testing_area1_2(){
 								   rock_ba,
 								   which_layer);
 
-	tmp_th.set_curr_layer(which_layer);
+	//tmp_th.set_curr_layer(which_layer);
 
 // 	//grass square terrain block width: number of terrain blocks
 // 	//wide a grass square is. 
@@ -219,12 +219,271 @@ function build_testing_area1_2(){
 
 };
 
-th = build_testing_area1_2();
-//print_2d_array_v9(th.get_ascii_map());
-// print_2d_array_v2(th.get_ascii_map());
-//print_2d_array_v10(th.get_ascii_map());
-//print_2d_array_v11(th.get_ascii_map());
-print_2d_array(th.get_ascii_map());
+//th = build_testing_area1_2();
+//print_2d_array(th.get_ascii_map());
 
 
 
+function build_testing_area1_3(){
+
+	var which_layer = 0;
+
+	var tba = 35;
+
+	var tbd = 15;
+
+	var tmp_th = new Terrain_Layer(which_layer,tba,tbd);
+
+	var grass_sprite = [0,0,32,32];
+	var grass_sprite_sheet = "grass_and_rocks_canvas";
+
+	//I guess grass has a height of 1. 
+	var grass_ba = [
+			{layer: 0, 
+			start_loc: [0,0], 
+			ts_layer: [
+					   [0,0,0],
+					   [0,0,0],
+					   [0,0,0]
+					  ], 
+			d_array: true}
+			];
+
+	var grass_hos = 0; 
+	var grass_wos = 30;
+	var grass_los = 30;
+
+	var g_x = 2;
+	var g_y = 1;
+
+
+
+	tmp_th.add_square_w_boundaries(g_x,
+								   g_y,
+								   grass_wos,
+								   grass_los,
+								   grass_hos,
+								   grass_sprite,
+								   grass_sprite_sheet,
+								   grass_ba,
+								   which_layer);
+
+////////////////////////////////////////////////////////
+
+	return tmp_th;
+
+};
+
+// th = build_testing_area1_3();
+// print_2d_array(th.get_ascii_map());
+
+
+function build_testing_area1_4(){
+
+	var which_layer = 0;
+
+	var tba = 35;
+
+	var tbd = 15;
+
+	var tmp_th = new Terrain_Layer(which_layer,tba,tbd);
+
+	tmp_th = insert_grass(tmp_th)
+
+	tmp_th = insert_rock(tmp_th);
+
+
+	return tmp_th;
+
+};
+
+function insert_rock(tmp_th){
+
+	var which_layer = 0;
+
+	var tba = 35;
+
+	var tbd = 15;
+
+	var r_x = 0;
+	var r_y = 0;
+	var rock_wos = 30;
+	var rock_los = 10;
+	var rock_hos = 30; 
+	var rock_sprite = [32,0,32,32];
+	var rock_sprite_sheet = "rock1";
+	var rock_ba = [
+		{layer: 0, start_loc: [0,2], ts_layer: [1,1,1], d_array: false},
+		{layer: 1, start_loc: [0,2], ts_layer: [1,1,1], d_array: false},
+		{layer: 2, start_loc: [0,2], ts_layer: [1,1,1], d_array: false}
+		];
+
+
+	tmp_th.add_square_w_boundaries(r_x,
+								   r_y,
+								   rock_wos,
+								   rock_los,
+								   rock_hos,
+								   rock_sprite,
+								   rock_sprite_sheet,
+								   rock_ba,
+								   which_layer);
+
+
+	return tmp_th;
+};
+
+function insert_grass(tmp_th){
+
+	var which_layer = 0;
+	var tba = 35;
+	var tbd = 15;
+	var tmp_th = new Terrain_Layer(which_layer,tba,tbd);
+
+	var g_x = 0;
+	var g_y = 0;
+	var grass_wos = 30;
+	var grass_los = 30;
+	var grass_hos = 0; 
+	var grass_sprite = [0,0,32,32];
+	var grass_sprite_sheet = "grass_and_rocks_canvas";
+	//I guess grass has a height of 1. 
+	var grass_ba = [
+			{layer: 0, 
+			start_loc: [0,0], 
+			ts_layer: [
+					   [0,0,0],
+					   [0,0,0],
+					   [0,0,0]
+					  ], 
+			d_array: true}
+			];
+	
+	tmp_th.add_square_w_boundaries(g_x,
+								   g_y,
+								   grass_wos,
+								   grass_los,
+								   grass_hos,
+								   grass_sprite,
+								   grass_sprite_sheet,
+								   grass_ba,
+								   which_layer);
+
+	return tmp_th;
+
+};
+
+
+
+
+// th = build_testing_area1_4();
+// print_2d_array(th.get_ascii_map());
+
+//-probably manually set area holder to display the first layer. 
+//-get it to take in all the stuff and display it properly. 
+//-finally, check that the above 2 layers hold the rest of the rock. 
+function build_area_holder_testing_area(){
+
+	var tba = 35;
+	var tbd = 15;
+
+	var tmp_ah = new Area_Holder(tba,tbd);
+
+
+	tmp_ah = area_holder_insert_grass(tmp_ah);
+
+	tmp_ah = area_holder_insert_rock(tmp_ah);
+
+
+	return tmp_ah;
+};
+
+function area_holder_insert_grass(tmp_ah){
+
+	var which_layer = 0;
+	var tba = 35;
+	var tbd = 15;
+	var tmp_th = new Terrain_Layer(which_layer,tba,tbd);
+	
+	var x = 0;
+	var y = 0;
+	var w = 30;
+	var l = 30;
+	var h = 0; 
+	var which_sprite_array = [0,0,32,32];
+	var name_of_sprite_sheet = "grass_and_rocks_canvas";
+	//I guess grass has a height of 1. 
+	var ba = [
+			{layer: 0, 
+			start_loc: [0,0], 
+			ts_layer: [
+					   [0,0,0],
+					   [0,0,0],
+					   [0,0,0]
+					  ], 
+			d_array: true}
+			];
+
+	tmp_ah.add_square(x,
+					  y,
+					  w,
+					  l,
+					  h,
+					  which_sprite_array,
+					  name_of_sprite_sheet,
+					  ba,
+					  which_layer);
+
+
+	return tmp_ah;
+};
+
+
+function area_holder_insert_rock(tmp_ah){
+
+	var which_layer = 0;
+
+	var tba = 35;
+
+	var tbd = 15;
+
+	var r_x = 0;
+	var r_y = 0;
+	var rock_wos = 30;
+	var rock_los = 10;
+	var rock_hos = 30; 
+	var rock_sprite = [32,0,32,32];
+	var rock_sprite_sheet = "rock1";
+	var rock_ba = [
+		{layer: 0, start_loc: [0,2], ts_layer: [1,1,1], d_array: false},
+		{layer: 1, start_loc: [0,2], ts_layer: [1,1,1], d_array: false},
+		{layer: 2, start_loc: [0,2], ts_layer: [1,1,1], d_array: false}
+		];
+
+
+	tmp_ah.add_square(r_x,
+					   r_y,
+					   rock_wos,
+					   rock_los,
+					   rock_hos,
+					   rock_sprite,
+					   rock_sprite_sheet,
+					   rock_ba,
+					   which_layer);
+
+// (x,
+// y,
+// w,
+// l,
+// h,
+// which_sprite_array,
+// name_of_sprite_sheet,
+// ba,
+// which_layer);
+
+
+	return tmp_ah;
+};
+
+ah = build_area_holder_testing_area();
+//print_3d_array(ah.get_3d_ascii_map());
