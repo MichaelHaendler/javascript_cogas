@@ -1,0 +1,16 @@
+
+
+my new print 2d array tool seems to be working. going to delete all the old ones. 
+
+that will take 2 seconds. 
+
+the big thing that I am doing is: 
+
+correcting it so that the adj_x and adj_y vals in terr square's get_ascii_terrain_block_type
+method are calculated correctly. 
+
+displaying those values in the correct location on the ascii diagram
+
+note: need to make sure that the tb's are being set properly. 
+
+lol okay. 
