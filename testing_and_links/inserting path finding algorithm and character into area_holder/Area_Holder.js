@@ -1,17 +1,21 @@
 /*
-weird idea: 
+idea:
 
-implement area holder. 
+get person's 3d tb's set up 
 
-once you start to get it working...given that the second layer (aka z[1]) will only
-have one or two things on it...test then to see if terrain layer is working correctly. 
+then get that general square working
 
-what you want to test: 
+then get the yellow 3x3 square working for the character
 
-asides from being able to put a rock anywhere (thats a part of area holder not terr layer)
+then get the yellow square to turn red when its over an area
+that cant be walked 
 
-you want to test to see if you strech something (like the rock) if it will then show up properly
-in the ascii_tss array. 
+then get the drawing stuff in proper order going
+
+then get a rudamentary walking algorithm going. 
+
+then take the actual shortest path code, and incorporate the 
+
 */
 
 function Area_Holder(terrain_blocks_across,terrain_blocks_down){

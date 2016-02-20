@@ -405,8 +405,8 @@ function area_holder_insert_grass(tmp_ah){
 	var tbd = 15;
 	var tmp_th = new Terrain_Layer(which_layer,tba,tbd);
 	
-	var x = 0;
-	var y = 0;
+	var x = 5;
+	var y = 5;
 	var w = 30;
 	var l = 30;
 	var h = 0; 
@@ -447,8 +447,8 @@ function area_holder_insert_rock(tmp_ah){
 
 	var tbd = 15;
 
-	var r_x = 0;
-	var r_y = 0;
+	var r_x = 5;
+	var r_y = 5;
 	var rock_wos = 30;
 	var rock_los = 10;
 	var rock_hos = 30; 

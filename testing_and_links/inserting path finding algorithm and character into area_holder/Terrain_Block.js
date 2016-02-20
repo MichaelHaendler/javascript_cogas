@@ -21,6 +21,9 @@ Terrain_Block.w = 10;
 Terrain_Block.l = 10;
 Terrain_Block.h = 10;
 
+// Terrain_Block.same_color = false;
+// Terrain_Block.static_color = null;
+
 
 //dont need these values per instance...so made them static
 Terrain_Block.cannot_walk = 1;
@@ -127,6 +130,28 @@ Terrain_Block.prototype.draw_ssi = function(){
 	// console.log("this.l is: " + this.l);
 
 };
+
+Terrain_Block.prototype.draw_tb_with_provided_color = function(color){
+
+	var prev_color = ctx.strokeStyle;
+
+	var prev_line_width = ctx.lineWidth;
+
+	ctx.lineWidth = "1";
+
+	ctx.strokeStyle = color;
+
+	ctx.rect(this.x,this.y,this.w,this.l);
+
+	ctx.stroke();
+
+	ctx.strokeStyle = prev_color;
+
+	ctx.lineWidth = prev_line_width;
+
+};
+
+
 
 
 Terrain_Block.prototype.contains_mouse = function(){

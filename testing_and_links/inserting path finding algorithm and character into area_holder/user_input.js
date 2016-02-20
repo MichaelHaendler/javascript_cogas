@@ -3,22 +3,16 @@
 
 function set_user_inputs(){
 
-	//c.addEventListener("mousemove", getLoc, false);
+
 	c.addEventListener("mousedown", on_mouse_down, false);
 	c.addEventListener("mouseup", on_mouse_up, false);
-
-	//q: why was 'keyboard(e)' bad, but 'keyboard' okay?
-	//$(document).keypress(keyboard);
+	c.addEventListener("wheel", on_scroll,false);
 	
 	$(document).keydown(keyboard);
 	$(document).keyup(clear_g_moved);
 	$(document).mousemove(getLoc);
-	//g_moved = false;
 
 };//end of set_user_inputs
-
-
-
 
 function on_mouse_down(event){
 
@@ -42,6 +36,18 @@ function on_mouse_up(event){
 		mrc = false;
 	}
 
+}
+
+function on_scroll(event){
+
+	if(event.wheelDelta >= 0){
+		ms++;
+	}
+	else{
+		ms--;
+	}
+
+	//pw.print("ms is: " + ms);
 }
 
 function mouse_values(){

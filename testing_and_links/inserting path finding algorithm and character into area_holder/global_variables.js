@@ -16,7 +16,10 @@ var mrc = false;
 var mlc = false;
 
 //mouse scroll (not sure about this one)
-var ms = -1;
+// var msx = -1;
+// var msy = -1;
+
+var ms = 0;
 
 var g_key = -1; //key that was last hit. 
 
