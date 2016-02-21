@@ -39,6 +39,8 @@ var th = null;
 //area holder
 var ah = null;
 
+var tcb = null;
+
 
 function print_2d_array(a){
 

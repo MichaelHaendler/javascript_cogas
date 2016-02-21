@@ -15,7 +15,8 @@ Char_Base.can_walk = "green"
 
 Char_Base.holding_down_left_click = "blue";
 
-function Char_Base(x,y,z,tb_c_w,tb_c_l,){
+//tb_c_w == terr block count wide. 
+function Char_Base(z,x,y,tb_c_w,tb_c_l){
 
 	//will always be 1 (or at least I think so)
 	this.block_type = 1;
@@ -66,19 +67,29 @@ function Char_Base(x,y,z,tb_c_w,tb_c_l,){
 		this.center_array = 0;
 	}
 	else{
-		this.center_array = Math.round(this.w / 2);	
+		this.center_array = Math.floor(this.w / 2);	
 	}
+
+	this.center_amount_h = this.center_array * Terrain_Block.w;
+
+	this.center_amount_l = this.center_array * Terrain_Block.l;
 
 
 	//this.center_amount = this.center_array * Terrain_Block.w;
 
 	//horizontal or not. if false then it's veritcle.  
-	this.adj_horizontally = true;
+	this.horizontal = true;
 
 	//default value that should never actually happen. 
 	this.color = "black";
+	//this.color = "yellow";
 	
+	this.length = this.tba.length;
 
+	//for testing only
+	//this.set_horizontally();
+
+	//this.set_vertically();
 };
 
 
@@ -91,17 +102,20 @@ Char_Base.prototype.get_tba = function(){
 };
 
 //ah_ascii_tba stands for area holder ascii terr block array. 
+
+//simply checks if the current location/position of the char_base
+//falls on an area that cannot be otherwise walked on. 
 Char_Base.prototype.can_stand_there = function(ah_ascii_tba){
 
-	var tf = null;
+	// var tf = null;
 
-	if(this.horizontal){(
-		this.adj_horizontally();
-	}
-	//vertically 
-	else{
-		this.adj_vert();
-	}
+	// if(this.horizontal){
+	// 	this.adj_horizontally();
+	// }
+	// //vertically 
+	// else{
+	// 	this.adj_vert();
+	// }
 
 	//now check to see if any of the tb's are ontop of a 1. 
 	//if yes, turn red (cant stand there). if no, turn 
@@ -163,23 +177,48 @@ Char_Base.prototype.tb_in_tba_ontop_of_a_one = function(ah_ascii_tba){
 // };
 
 
-Char_Base.prototype.adj_horizontally = function(){
+Char_Base.prototype.set_horizontally = function(){
+
+	//console.log("zoomy");
 
 	//center_amount == is just the actual amount (num of pixels) from the start location
 	//in the array to what we are calling the center/middle of the array. (is calcualted
 	//in the method rather than the constructor so that I can use Terrain_Block.h when doing
 	//the verticle calculation).
 
-	var center_amount = this.center_array * Terrain_Block.w;
+	// var tmp_mx_loc = (mx < 0) ? 0 : mx;
+
+	// var tmp_my_loc = (my < 0) ? 0 : my;
+
+	// console.log("this.tba.length is: " + this.tba.length);
+
+	// console.log("this.center_array is: " + this.center_array);
+
+	
 
 	//this gets us which tb we're currently hovering over. 
-	var curr_tb_x = Math.round(mx/Terrain_Block.w) * Terrain_Block.w;
-	var curr_tb_y = Math.round(my/Terrain_Block.l) * Terrain_Block.l;
+	// var curr_tb_x = Math.round(tmp_mx_loc/Terrain_Block.w) * Terrain_Block.w;
+	// var curr_tb_y = Math.round(tmp_my_loc/Terrain_Block.l) * Terrain_Block.l;
+
+	// mx = 54;
+	// my = 54;
+
+	var tmp_x = mx - (Terrain_Block.w/2);
+	var tmp_y = my - (Terrain_Block.l/2);
+
+	// var tmp_x = mx;
+	// var tmp_y = my;
+
+	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
+	var curr_tb_y = Math.round(tmp_y/Terrain_Block.l) * Terrain_Block.l
+
+	// console.log("curr_tb_x is: " + curr_tb_x);
+	// console.log("curr_tb_y is: " + curr_tb_y);
 
 	//take the current x location (aka curr_tb_x) and then subtract "center amount"
 	//from it...making it so that our mouse should be drawn in the middle (or what
 	//will at times be close enough to the middle) of the drawn array of yellow tbs. 
-	var curr_tb_x_adj = curr_tb_x - center_amount;
+	var curr_tb_x_adj = curr_tb_x - this.center_amount_h;
 
 	for(var numx = 0; numx < this.tba.length; numx++){
 
@@ -187,7 +226,7 @@ Char_Base.prototype.adj_horizontally = function(){
 
 			this.tba[numx][numy].y = curr_tb_y;
 
-			var x_incr = i * Terrain_Block.w;
+			var x_incr = numx * Terrain_Block.w;
 
 			this.tba[numx][numy].x = curr_tb_x_adj + x_incr;
 
@@ -197,25 +236,45 @@ Char_Base.prototype.adj_horizontally = function(){
 };
 
 
-Char_Base.prototype.adj_vert = function(){
+Char_Base.prototype.set_vertically = function(){
 
 	//center_amount == is just the actual amount (num of pixels) from the start location
 	//in the array to what we are calling the center/middle of the array. (is calcualted
 	//in the method rather than the constructor so that I can use Terrain_Block.h when doing
 	//the verticle calculation).
 
-	//with this...lets say center_array was 3. and length is 10. so the center of the
-	//array is 30 pixels in. 
-	var center_amount = this.center_array * Terrain_Block.l;
+	//with this...lets say center_array was 3 (meaning an array of length 7). And length is 
+	//10. so the center of the array is 30 pixels in. 
+	//var center_amount = this.center_array * Terrain_Block.l;
 
-	//this gets us which tb we're currently hovering over. 
-	var curr_tb_x = Math.round(mx/Terrain_Block.w) * Terrain_Block.w;
-	var curr_tb_y = Math.round(my/Terrain_Block.l) * Terrain_Block.l;
+	// console.log("this.center_array is: " + this.center_array);
+	// console.log("Terrain_Block.l is: " + Terrain_Block.l);
+	// console.log("center_amount is: " + center_amount);
 
-	//take the current x location (aka curr_tb_x) and then subtract "center amount"
+	// mx = 54;
+	// my = 54;
+
+	var tmp_x = mx - (Terrain_Block.w/2);
+	var tmp_y = my - (Terrain_Block.l/2);
+
+	//this gets us which tb on the general playing grid we're currently hovering over. 
+	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
+	var curr_tb_y = Math.round(tmp_y/Terrain_Block.l) * Terrain_Block.l;
+
+	// console.log("curr_tb_x is: " + curr_tb_x);
+	// console.log("curr_tb_y is: " + curr_tb_y);
+
+
+
+	//take the current x location (aka curr_tb_y) and then subtract "center amount"
 	//from it...making it so that our mouse should be drawn in the middle (or what
 	//will at times be close enough to the middle) of the drawn array of yellow tbs. 
-	var curr_tb_y_adj = curr_tb_y - center_amount;
+	//-10
+	var curr_tb_y_adj = curr_tb_y - this.center_amount_l;
+
+	// console.log("curr_tb_y_adj is: " + curr_tb_y_adj);
+
+	// console.log("Terrain_Block.l is: " + Terrain_Block.l);
 
 	//set their x and y values so that the boxes be displayed ontop of
 	//each other (aka vertically)
@@ -225,7 +284,12 @@ Char_Base.prototype.adj_vert = function(){
 
 			this.tba[numx][numy].x = curr_tb_x;
 
-			var y_incr = i * Terrain_Block.l;
+			//the array is 3 across the x axis, and has only a length of one on the
+			//y axis.
+			//This might be a bit dirty, but I think it should consistently work. 
+			var fake_y = numx;
+
+			var y_incr = fake_y * Terrain_Block.l;
 
 			this.tba[numx][numy].y = curr_tb_y_adj + y_incr;
 
@@ -233,29 +297,46 @@ Char_Base.prototype.adj_vert = function(){
 		}
 	}
 };
-
+// 1 (0,-10)
+// 2 (0,0)
+// 3 (0,10)
 
 //the reason that I made the draw_tb_with_provided_color() method 
 //is because I dont want to have to be constantly re-setting the colors
 //for tb's associated with a char_base instance. 
 Char_Base.prototype.draw_ssi = function(){
 
+	this.click();
+
 	for(var numx = 0; numx < this.tba.length; numx++){
 
 		for(var numy = 0; numy < this.tba[numx].length; numy++){
 
-			var tmp_tb = this.tba[numx][numy];
-
-			tmp_tb.draw_tb_with_provided_color(this.color);
+			this.tba[numx][numy].draw_tb_with_provided_color(this.color);
 
 		}
 
-	}
-
-	ctx.strokeStyle = prev_color;
-
+	};
 
 };
+
+
+Char_Base.prototype.click = function(){
+
+	//this.horizontal = false;
+
+	if(mlc){
+
+		if(this.horizontal){
+			this.set_horizontally();
+		}
+		else{
+			this.set_vertically();
+		}
+	}
+
+};
+
 
 //var center_amount = this.center_array * Terrain_Block.h;
 
@@ -283,12 +364,56 @@ Char_Base.prototype.draw_ssi = function(){
 //    | (down)
 //    v
 
-function calc_loc(len){
+//[1,2,3]
 
-	//the "* -1" part is to turn the results positive if they're negative
-	return (0 > ms) ? ((ms % len) * -1) : (ms % len);
+//6  : loc 0
+//3  : loc 0
+//-1 : loc 2 
+//-2 : loc 1
 
-};
+//-3 : loc 0 (3%3 is 0)
+//-4 : loc 2 (4%3 is 1)
+//-5 : loc 1 (5%3 is 2)
 
+//-6 : loc 0 (6%3 is 0)
+//-7 : loc 2 (7%3 is 1)
+//-8 : loc 2 (8%3 is 2)
+
+//-------------------
+
+
+
+
+/*
+length 4 (0 to 3)
+
+-1 : loc 3
+1 % 4 is 1
+4 - 1 is 3 (right!)
+
+-2 : loc 2
+2 % 4 is 2
+4 - 2 is 2 (right!)
+
+
+
+
+5 : loc 1 (aka 2nd spot)
+5 % 4 is 1
+
+
+[1,2,3,4]
+
+
+*/
+
+/*
+get this working
+
+then put it into person. 
+
+then fix the pseudo 3d code so that it includes the person correctly. 
+
+*/
 
 

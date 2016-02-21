@@ -489,3 +489,37 @@ ah = build_area_holder_testing_area();
 //print_3d_array(ah.get_3d_ascii_map());
 
 var mike = new Person();
+
+
+function test_horizontal_character_base(){
+
+	var x = 0, y = 0, z = 0, tb_c_w = 3, tb_c_l = 1;
+
+
+	//automatically set to horizontal
+	var tmp_tcb = new Char_Base(z,x,y,tb_c_w,tb_c_l);
+
+	return tmp_tcb;
+};
+
+function test_vertical_character_base(){
+
+	var x = 0, y = 0, z = 0, tb_c_w = 3, tb_c_l = 1;
+
+	//automatically set to horizontal
+	var tmp_tcb = new Char_Base(z,x,y,tb_c_w,tb_c_l);
+
+	//will now be verticle. 
+	tmp_tcb.adj_horizontally = false;
+
+	return tmp_tcb;
+
+};
+
+
+var tcb = test_horizontal_character_base();
+
+//tcb.testing();
+
+
+
