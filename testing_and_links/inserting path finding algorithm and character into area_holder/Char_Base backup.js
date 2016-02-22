@@ -90,10 +90,6 @@ function Char_Base(z,x,y,tb_c_w,tb_c_l){
 	//this.set_horizontally();
 
 	//this.set_vertically();
-
-	//this.set_diagonally_ll_and_ur();
-
-	this.set_diagonally_ul_and_lr();
 };
 
 
@@ -305,91 +301,6 @@ Char_Base.prototype.set_vertically = function(){
 // 2 (0,0)
 // 3 (0,10)
 
-//upper left corner and lower right corner 
-Char_Base.prototype.set_diagonally_ll_and_ur = function(){
-
-	//with this...lets say center_array was 3 (meaning an array of length 7). And length is 
-	//10. so the center of the array is 30 pixels in. 
-	//var center_amount = this.center_array * Terrain_Block.l;
-
-	var tmp_x = mx - (Terrain_Block.w/2);
-	var tmp_y = my - (Terrain_Block.l/2);
-
-	//this gets us which tb on the general playing grid we're currently hovering over. 
-	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
-	var curr_tb_y = Math.round(tmp_y/Terrain_Block.l) * Terrain_Block.l;
-
-	//take the current x location (aka curr_tb_y) and then subtract "center amount"
-	//from it...making it so that our mouse should be drawn in the middle (or what
-	//will at times be close enough to the middle) of the drawn array of yellow tbs. 
-	//-10
-	var curr_tb_y_adj = curr_tb_y - this.center_amount_l;
-
-	var curr_tb_x_adj = curr_tb_x - this.center_amount_h;
-
-	for(var numx = 0; numx < this.tba.length; numx++){
-
-		for(var numy = 0; numy < this.tba[numx].length; numy++){
-
-			var x_incr = numx * Terrain_Block.w;
-
-			this.tba[numx][numy].x = curr_tb_x_adj + x_incr;
-
-			//the array is 3 across the x axis, and has only a length of one on the
-			//y axis.
-			//This might be a bit dirty, but I think it should consistently work. 
-			var fake_y = numx;
-
-			var y_incr = fake_y * Terrain_Block.l;
-
-			this.tba[numx][numy].y = curr_tb_y_adj + y_incr;
-		}
-	}
-};
-
-
-//upper left and lower right corners 
-Char_Base.prototype.set_diagonally_ul_and_lr = function(){
-
-	var tmp_x = mx + (Terrain_Block.w * 1.5);
-	var tmp_y = my - Terrain_Block.l;
-
-	//this gets us which tb on the general playing grid we're currently hovering over. 
-	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
-	var curr_tb_y = Math.round(tmp_y/Terrain_Block.l) * Terrain_Block.l;
-
-	//take the current x location (aka curr_tb_y) and then subtract "center amount"
-	//from it...making it so that our mouse should be drawn in the middle (or what
-	//will at times be close enough to the middle) of the drawn array of yellow tbs. 
-	//-10
-	var curr_tb_y_adj = curr_tb_y - this.center_amount_l;
-
-	var curr_tb_x_adj = curr_tb_x - this.center_amount_h;
-
-	for(var numx = 0; numx < this.tba.length; numx++){
-
-		for(var numy = 0; numy < this.tba[numx].length; numy++){
-
-			//the "-1" part is to deal with the offset. ex: this.tba[numx].length is 3. 
-			//means the elements go from 0 to 2 though. the minus 1 helps put things into 
-			//that 0 to 2 range. 
-			var x_incr = (this.tba[numx].length - numx - 1) * Terrain_Block.w;
-
-			this.tba[numx][numy].x = curr_tb_x_adj + x_incr;
-
-			//the array is 3 across the x axis, and has only a length of one on the
-			//y axis.
-			//This might be a bit dirty, but I think it should consistently work. 
-			var fake_y = numx;
-
-			var y_incr = fake_y * Terrain_Block.l;
-
-			this.tba[numx][numy].y = curr_tb_y_adj + y_incr;
-		}
-	}
-
-};
-
 //the reason that I made the draw_tb_with_provided_color() method 
 //is because I dont want to have to be constantly re-setting the colors
 //for tb's associated with a char_base instance. 
@@ -412,20 +323,16 @@ Char_Base.prototype.draw_ssi = function(){
 
 Char_Base.prototype.click = function(){
 
-	// if(mlc){
+	//this.horizontal = false;
 
-	// 	if(this.horizontal){
-	// 		this.set_horizontally();
-	// 	}
-	// 	else{
-	// 		this.set_vertically();
-	// 	}
-	// }
-
-	//just for testing, is not actual code. 
 	if(mlc){
-		//this.set_diagonally_ul_and_lr();
-		this.set_diagonally_ll_and_ur();
+
+		if(this.horizontal){
+			this.set_horizontally();
+		}
+		else{
+			this.set_vertically();
+		}
 	}
 
 };
