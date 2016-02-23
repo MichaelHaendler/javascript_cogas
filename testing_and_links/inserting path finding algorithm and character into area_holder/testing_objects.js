@@ -517,9 +517,15 @@ function test_vertical_character_base(){
 };
 
 
-var tcb = test_horizontal_character_base();
+//var tcb = test_horizontal_character_base();
 
 //tcb.testing();
+
+var person_w = 30;
+var person_l = 10
+
+
+cbc = new Char_Base_Controller(person_w,person_l);
 
 
 

@@ -15,17 +15,29 @@ Char_Base.can_walk = "green"
 
 Char_Base.holding_down_left_click = "blue";
 
-//tb_c_w == terr block count wide. 
-function Char_Base(z,x,y,tb_c_w,tb_c_l){
+//horizontal
+//verticle
+//diagonal going from upper right to lower left
+//diagonal going from upper left to lower right
+Char_Base.num_of_angles = 4;
 
-	//will always be 1 (or at least I think so)
+//tb_c_w == terr block count wide. 
+//function Char_Base(z,x,y,tb_c_w,tb_c_l){
+function Char_Base(tb_c_w,tb_c_l,which_a){
+
+	//will be used to determine whether to use horizontal, verticle,
+	//or which diagonal. 
+	this.which_angle = which_a;
+
+	//will always be 1 (how can you walk through a persons feet? Or
+	//the base of a car?)
 	this.block_type = 1;
 
-	this.x = x;
+	// this.x = x;
 
-	this.y = y;
+	// this.y = y;
 
-	this.z = z;
+	// this.z = z;
 
 	this.w = tb_c_w;
 
@@ -94,6 +106,10 @@ function Char_Base(z,x,y,tb_c_w,tb_c_l){
 	//this.set_diagonally_ll_and_ur();
 
 	this.set_diagonally_ul_and_lr();
+
+	//arbitrary initial values that simply aren't on the canvas
+	this.mlc_x = -20;
+	this.mlc_y = -20;
 };
 
 
@@ -181,7 +197,7 @@ Char_Base.prototype.tb_in_tba_ontop_of_a_one = function(ah_ascii_tba){
 // };
 
 
-Char_Base.prototype.set_horizontally = function(){
+Char_Base.prototype.set_horizontally = function(mlc_x,mlc_y){
 
 	//console.log("zoomy");
 
@@ -207,8 +223,10 @@ Char_Base.prototype.set_horizontally = function(){
 	// mx = 54;
 	// my = 54;
 
-	var tmp_x = mx - (Terrain_Block.w/2);
-	var tmp_y = my - (Terrain_Block.l/2);
+	//pw.print()
+
+	var tmp_x = mlc_x - (Terrain_Block.w/2);
+	var tmp_y = mlc_y - (Terrain_Block.l/2);
 
 	// var tmp_x = mx;
 	// var tmp_y = my;
@@ -216,8 +234,9 @@ Char_Base.prototype.set_horizontally = function(){
 	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
 	var curr_tb_y = Math.round(tmp_y/Terrain_Block.l) * Terrain_Block.l
 
-	// console.log("curr_tb_x is: " + curr_tb_x);
-	// console.log("curr_tb_y is: " + curr_tb_y);
+	// //pw.print("tmp_x is: " + tmp_x);
+	// //pw.print("curr_tb_x is: " + curr_tb_x);
+	// //pw.print("curr_tb_y is: " + curr_tb_y);
 
 	//take the current x location (aka curr_tb_x) and then subtract "center amount"
 	//from it...making it so that our mouse should be drawn in the middle (or what
@@ -240,7 +259,7 @@ Char_Base.prototype.set_horizontally = function(){
 };
 
 
-Char_Base.prototype.set_vertically = function(){
+Char_Base.prototype.set_vertically = function(mlc_x,mlc_y){
 
 	//center_amount == is just the actual amount (num of pixels) from the start location
 	//in the array to what we are calling the center/middle of the array. (is calcualted
@@ -258,8 +277,8 @@ Char_Base.prototype.set_vertically = function(){
 	// mx = 54;
 	// my = 54;
 
-	var tmp_x = mx - (Terrain_Block.w/2);
-	var tmp_y = my - (Terrain_Block.l/2);
+	var tmp_x = mlc_x - (Terrain_Block.w/2);
+	var tmp_y = mlc_y - (Terrain_Block.l/2);
 
 	//this gets us which tb on the general playing grid we're currently hovering over. 
 	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
@@ -306,14 +325,14 @@ Char_Base.prototype.set_vertically = function(){
 // 3 (0,10)
 
 //upper left corner and lower right corner 
-Char_Base.prototype.set_diagonally_ll_and_ur = function(){
+Char_Base.prototype.set_diagonally_ll_and_ur = function(mlc_x,mlc_y){
 
 	//with this...lets say center_array was 3 (meaning an array of length 7). And length is 
 	//10. so the center of the array is 30 pixels in. 
 	//var center_amount = this.center_array * Terrain_Block.l;
 
-	var tmp_x = mx - (Terrain_Block.w/2);
-	var tmp_y = my - (Terrain_Block.l/2);
+	var tmp_x = mlc_x - (Terrain_Block.w/2);
+	var tmp_y = mlc_y - (Terrain_Block.l/2);
 
 	//this gets us which tb on the general playing grid we're currently hovering over. 
 	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
@@ -349,10 +368,10 @@ Char_Base.prototype.set_diagonally_ll_and_ur = function(){
 
 
 //upper left and lower right corners 
-Char_Base.prototype.set_diagonally_ul_and_lr = function(){
+Char_Base.prototype.set_diagonally_ul_and_lr = function(mlc_x,mlc_y){
 
-	var tmp_x = mx + (Terrain_Block.w * 1.5);
-	var tmp_y = my - Terrain_Block.l;
+	var tmp_x = mlc_x + (Terrain_Block.w * 1.5);
+	var tmp_y = mlc_y - Terrain_Block.l;
 
 	//this gets us which tb on the general playing grid we're currently hovering over. 
 	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
@@ -366,6 +385,10 @@ Char_Base.prototype.set_diagonally_ul_and_lr = function(){
 
 	var curr_tb_x_adj = curr_tb_x - this.center_amount_h;
 
+	// console.log("curr_tb_y_adj is: " + curr_tb_y_adj);
+
+	// console.log("curr_tb_x_adj is: " + curr_tb_x_adj);
+
 	for(var numx = 0; numx < this.tba.length; numx++){
 
 		for(var numy = 0; numy < this.tba[numx].length; numy++){
@@ -374,6 +397,8 @@ Char_Base.prototype.set_diagonally_ul_and_lr = function(){
 			//means the elements go from 0 to 2 though. the minus 1 helps put things into 
 			//that 0 to 2 range. 
 			var x_incr = (this.tba[numx].length - numx - 1) * Terrain_Block.w;
+
+			//console.log("x_incr is: " + x_incr);
 
 			this.tba[numx][numy].x = curr_tb_x_adj + x_incr;
 
@@ -384,9 +409,19 @@ Char_Base.prototype.set_diagonally_ul_and_lr = function(){
 
 			var y_incr = fake_y * Terrain_Block.l;
 
+			//console.log("y_incr is: " + y_incr);
+
 			this.tba[numx][numy].y = curr_tb_y_adj + y_incr;
+
+			// console.log("curr_tb_y_adj is: " + curr_tb_y_adj);
+
+			// console.log("this.tba["+numx+"]["+numy+"].x is: " + this.tba[numx][numy].x);
+
+			// console.log("this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y)
 		}
+
 	}
+	//console.log("-----");
 
 };
 
@@ -395,11 +430,17 @@ Char_Base.prototype.set_diagonally_ul_and_lr = function(){
 //for tb's associated with a char_base instance. 
 Char_Base.prototype.draw_ssi = function(){
 
-	this.click();
+	//this.click();
 
 	for(var numx = 0; numx < this.tba.length; numx++){
 
 		for(var numy = 0; numy < this.tba[numx].length; numy++){
+
+			// //pw.print("this.tba["+numx+"]["+numy+"].x is: " + this.tba[numx][numy].x);
+
+			// //pw.print("this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y);
+
+			 ////pw.print("this.tba["+numx+"]["+numy+"] is: " + this.tba[numx][numy]);
 
 			this.tba[numx][numy].draw_tb_with_provided_color(this.color);
 
@@ -409,7 +450,7 @@ Char_Base.prototype.draw_ssi = function(){
 
 };
 
-
+//not in use
 Char_Base.prototype.click = function(){
 
 	// if(mlc){
@@ -423,13 +464,93 @@ Char_Base.prototype.click = function(){
 	// }
 
 	//just for testing, is not actual code. 
-	if(mlc){
-		//this.set_diagonally_ul_and_lr();
-		this.set_diagonally_ll_and_ur();
+	// if(mlc){
+	// 	//this.set_diagonally_ul_and_lr();
+	// 	this.set_diagonally_ll_and_ur();
+	// }
+
+
+	// if(mlc){
+
+	// 	switch(this.which_angle) {
+	// 	    case 0:
+	// 	        this.set_horizontally();
+	// 	        break;
+	// 	    case 1:
+	// 	        this.set_vertically();
+	// 	        break;
+	// 	    case 2:
+	// 	        this.set_diagonally_ul_and_lr();
+	// 	        break;
+	// 	    case 3:
+	// 	        this.set_diagonally_ll_and_ur();
+	// 	        break;
+	// 	    default:
+	// 	        default this.set_horizontally();
+	// 	}
+	// }
+
+
+
+	////pw.print("this.which_angle is: " + this.which_angle);
+
+
+
+	// if(mlc){
+	// 	this.mlc_x = mx;
+	// 	this.mlc_y = my;
+	// }
+
+	switch(this.which_angle){
+		case 0:
+			this.set_horizontally();
+			break;
+		case 1:
+			this.set_diagonally_ul_and_lr();
+			break;
+		case 2:
+			this.set_vertically();
+			break;
+		case 3:
+			this.set_diagonally_ll_and_ur();
+			break;
+		default:
+			this.set_horizontally();
 	}
+	
+
 
 };
 
+
+
+
+Char_Base.prototype.set_orientation_and_position = function(new_x,new_y){
+
+	// //pw.print("new_x is: " + new_x);
+	// //pw.print("new_y is: " + new_y);
+	// //pw.print("this.color is: " + this.color);
+
+	switch(this.which_angle){
+		case 0:
+			this.set_horizontally(new_x,new_y);
+			break;
+		case 1:
+			this.set_diagonally_ul_and_lr(new_x,new_y);
+			break;
+		case 2:
+			this.set_vertically(new_x,new_y);
+			break;
+		case 3:
+			this.set_diagonally_ll_and_ur(new_x,new_y);
+			break;
+		default:
+			this.set_horizontally(new_x,new_y);
+	}
+
+	//this.draw_ssi();
+
+};
 
 //var center_amount = this.center_array * Terrain_Block.h;
 

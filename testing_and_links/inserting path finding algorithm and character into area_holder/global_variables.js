@@ -41,6 +41,9 @@ var ah = null;
 
 var tcb = null;
 
+//control base controller (for testing only, not actual part of game)
+var cbc = null;
+
 
 function print_2d_array(a){
 
