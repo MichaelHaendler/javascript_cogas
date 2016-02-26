@@ -70,7 +70,17 @@ function Terrain_Block(z,x,y,block_type){
 	this.ulc_y = this.y;
 	this.llc_y = this.y + this.l;
 
+};
 
+Terrain_Block.prototype.tb_count_across_x_axis = function(){
+
+return this.x / Terrain_Block.w;
+
+};
+
+Terrain_Block.prototype.tb_count_down_y_axis = function(){
+
+return this.y / Terrain_Block.l;
 
 };
 

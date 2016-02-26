@@ -1,5 +1,8 @@
 
 
+var td_ascii_map = ah.get_3d_ascii_map();
+
+//print_3d_array(td_ascii_map);
 
 var mainloop = function (){
 
@@ -18,13 +21,16 @@ var mainloop = function (){
 
 	set_user_inputs();//get keyboard and mouse input from user
 
-	//ah.draw_ssi();
+	ah.draw_ssi();
+
+	//td == three d aka 3D
+	
 
 	//mike.run();
 
 	//tcb.draw_ssi();
 
-	cbc.draw_ssi();
+	cbc.draw_ssi_w_ascii_map(td_ascii_map[0]);
 
 	pw.displayList();
 

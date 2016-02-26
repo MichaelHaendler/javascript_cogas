@@ -15,19 +15,6 @@ Char_Base.can_walk = "green"
 
 Char_Base.holding_down_left_click = "blue";
 
-//have these to help with consistency when referring
-//to the values in the switch statement values (0,1,2,3) while
-//in Char_Base_Controller. 
-Char_Base.horizontal = 0;
-Char_Base.diag1 = 1;
-Char_Base.vertical = 2;
-Char_Base.diag2 = 3;
-
-
-Char_Base.h = "h";
-Char_Base.d = "d";
-Char_Base.v = "v";
-
 //horizontal
 //verticle
 //diagonal going from upper right to lower left
@@ -68,10 +55,6 @@ function Char_Base(tb_c_w,tb_c_l,which_a){
 
 			//Terrain_Block(z,x,y,block_type){
 			this.tba[numx][numy] = new Terrain_Block(this.z,0,0,this.block_type);
-
-			// console.log("2 this.tba["+numx+"]["+numy+"].x is: " + this.tba[numx][numy].x);
-
-			// console.log("2 this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y);
 		}
 	}
 
@@ -122,15 +105,11 @@ function Char_Base(tb_c_w,tb_c_l,which_a){
 
 	//this.set_diagonally_ll_and_ur();
 
-	//this.set_diagonally_ul_and_lr();
+	this.set_diagonally_ul_and_lr();
 
 	//arbitrary initial values that simply aren't on the canvas
-	// this.mlc_x = -20;
-	// this.mlc_y = -20;
-
-	this.old_mlc_x = -20;
-	this.old_mlc_y = -20;
-
+	this.mlc_x = -20;
+	this.mlc_y = -20;
 };
 
 
@@ -220,8 +199,6 @@ Char_Base.prototype.tb_in_tba_ontop_of_a_one = function(ah_ascii_tba){
 
 Char_Base.prototype.set_horizontally = function(mlc_x,mlc_y){
 
-	//console.log("(set_horizontally)");
-
 	//console.log("zoomy");
 
 	//center_amount == is just the actual amount (num of pixels) from the start location
@@ -276,21 +253,13 @@ Char_Base.prototype.set_horizontally = function(mlc_x,mlc_y){
 
 			this.tba[numx][numy].x = curr_tb_x_adj + x_incr;
 
-			// console.log("this.tba["+numx+"]["+numy+"].x is: " + this.tba[numx][numy].x);
-
-			// console.log("this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y);
-
 
 		}
 	}
-
-	//console.log("==========");
 };
 
 
 Char_Base.prototype.set_vertically = function(mlc_x,mlc_y){
-
-	//console.log("(set_vertically)");
 
 	//center_amount == is just the actual amount (num of pixels) from the start location
 	//in the array to what we are calling the center/middle of the array. (is calcualted
@@ -347,43 +316,23 @@ Char_Base.prototype.set_vertically = function(mlc_x,mlc_y){
 
 			this.tba[numx][numy].y = curr_tb_y_adj + y_incr;
 
-			// console.log("this.tba["+numx+"]["+numy+"].x is: " + this.tba[numx][numy].x);
-
-			// console.log("this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y);
-
 
 		}
 	}
-
-	//console.log("==========");
 };
 // 1 (0,-10)
 // 2 (0,0)
 // 3 (0,10)
 
 //upper left corner and lower right corner 
-//working as ul and lr
-Char_Base.prototype.set_diagonally_ul_and_lr = function(mlc_x,mlc_y){
-// Char_Base.prototype.set_diagonally_ll_and_ur = function(mlc_x,mlc_y){
+Char_Base.prototype.set_diagonally_ll_and_ur = function(mlc_x,mlc_y){
 
 	//with this...lets say center_array was 3 (meaning an array of length 7). And length is 
 	//10. so the center of the array is 30 pixels in. 
 	//var center_amount = this.center_array * Terrain_Block.l;
 
-	// var tmp_x = mlc_x - (Terrain_Block.w/2);
-	// var tmp_y = mlc_y - (Terrain_Block.l/2);
-
-	// var tmp_x = mlc_x + (Terrain_Block.w);
-	// var tmp_y = mlc_y + (Terrain_Block.l * 2);
-
-
-	// var tmp_x = mlc_x;
-	// var tmp_y = mlc_y - Terrain_Block.l;
-
-	//var tmp_x = mlc_x - Terrain_Block.w;
-	var tmp_x = mlc_x - Terrain_Block.w;
-	var tmp_y = mlc_y;
-
+	var tmp_x = mlc_x - (Terrain_Block.w/2);
+	var tmp_y = mlc_y - (Terrain_Block.l/2);
 
 	//this gets us which tb on the general playing grid we're currently hovering over. 
 	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
@@ -413,36 +362,16 @@ Char_Base.prototype.set_diagonally_ul_and_lr = function(mlc_x,mlc_y){
 			var y_incr = fake_y * Terrain_Block.l;
 
 			this.tba[numx][numy].y = curr_tb_y_adj + y_incr;
-
-			// console.log("this.tba["+numx+"]["+numy+"].x is: " + this.tba[numx][numy].x);
-
-			// console.log("this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y);
-
 		}
 	}
-
-	//console.log("==========");
 };
 
 
 //upper left and lower right corners 
-//working as ll and ur
-Char_Base.prototype.set_diagonally_ll_and_ur = function(mlc_x,mlc_y){
-// Char_Base.prototype.set_diagonally_ul_and_lr = function(mlc_x,mlc_y){
+Char_Base.prototype.set_diagonally_ul_and_lr = function(mlc_x,mlc_y){
 
-	// var tmp_x = mlc_x + (Terrain_Block.w * 1.5);
-	// var tmp_y = mlc_y - Terrain_Block.l;
-
-
-	// var tmp_x = mlc_x + (Terrain_Block.w * 3);
-	// var tmp_y = mlc_y - (Terrain_Block.l * 2);
-
-	//var tmp_x = mlc_x + (Terrain_Block.w * 2);
-	var tmp_x = mlc_x + Terrain_Block.w;
-	var tmp_y = mlc_y;
-
-	// var tmp_x = mlc_x + (Terrain_Block.w);
-	// var tmp_y = mlc_y - Terrain_Block.l;
+	var tmp_x = mlc_x + (Terrain_Block.w * 1.5);
+	var tmp_y = mlc_y - Terrain_Block.l;
 
 	//this gets us which tb on the general playing grid we're currently hovering over. 
 	var curr_tb_x = Math.round(tmp_x/Terrain_Block.w) * Terrain_Block.w;
@@ -488,11 +417,11 @@ Char_Base.prototype.set_diagonally_ll_and_ur = function(mlc_x,mlc_y){
 
 			// console.log("this.tba["+numx+"]["+numy+"].x is: " + this.tba[numx][numy].x);
 
-			// console.log("this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y);
+			// console.log("this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y)
 		}
 
 	}
-	//console.log("==========");
+	//console.log("-----");
 
 };
 
@@ -522,184 +451,104 @@ Char_Base.prototype.draw_ssi = function(){
 };
 
 //not in use
-// Char_Base.prototype.click = function(){
+Char_Base.prototype.click = function(){
 
-// 	//console.log("(click)");
+	// if(mlc){
 
-// 	// if(mlc){
+	// 	if(this.horizontal){
+	// 		this.set_horizontally();
+	// 	}
+	// 	else{
+	// 		this.set_vertically();
+	// 	}
+	// }
 
-// 	// 	if(this.horizontal){
-// 	// 		this.set_horizontally();
-// 	// 	}
-// 	// 	else{
-// 	// 		this.set_vertically();
-// 	// 	}
-// 	// }
-
-// 	//just for testing, is not actual code. 
-// 	// if(mlc){
-// 	// 	//this.set_diagonally_ul_and_lr();
-// 	// 	this.set_diagonally_ll_and_ur();
-// 	// }
+	//just for testing, is not actual code. 
+	// if(mlc){
+	// 	//this.set_diagonally_ul_and_lr();
+	// 	this.set_diagonally_ll_and_ur();
+	// }
 
 
-// 	// if(mlc){
+	// if(mlc){
 
-// 	// 	switch(this.which_angle) {
-// 	// 	    case 0:
-// 	// 	        this.set_horizontally();
-// 	// 	        break;
-// 	// 	    case 1:
-// 	// 	        this.set_vertically();
-// 	// 	        break;
-// 	// 	    case 2:
-// 	// 	        this.set_diagonally_ul_and_lr();
-// 	// 	        break;
-// 	// 	    case 3:
-// 	// 	        this.set_diagonally_ll_and_ur();
-// 	// 	        break;
-// 	// 	    default:
-// 	// 	        default this.set_horizontally();
-// 	// 	}
-// 	// }
+	// 	switch(this.which_angle) {
+	// 	    case 0:
+	// 	        this.set_horizontally();
+	// 	        break;
+	// 	    case 1:
+	// 	        this.set_vertically();
+	// 	        break;
+	// 	    case 2:
+	// 	        this.set_diagonally_ul_and_lr();
+	// 	        break;
+	// 	    case 3:
+	// 	        this.set_diagonally_ll_and_ur();
+	// 	        break;
+	// 	    default:
+	// 	        default this.set_horizontally();
+	// 	}
+	// }
 
 
 
-// 	////pw.print("this.which_angle is: " + this.which_angle);
+	////pw.print("this.which_angle is: " + this.which_angle);
 
 
 
-// 	// if(mlc){
-// 	// 	this.mlc_x = mx;
-// 	// 	this.mlc_y = my;
-// 	// }
+	// if(mlc){
+	// 	this.mlc_x = mx;
+	// 	this.mlc_y = my;
+	// }
 
-// 	// console.log("this.which_angle is: " + this.which_angle);
-
-// 	switch(this.which_angle){
-// 		case 0:
-// 			this.set_horizontally();
-// 			break;
-// 		case 1:
-// 			this.set_diagonally_ul_and_lr();
-// 			break;
-// 		case 2:
-// 			this.set_vertically();
-// 			break;
-// 		case 3:
-// 			this.set_diagonally_ll_and_ur();
-// 			break;
-// 		default:
-// 			this.set_horizontally();
-// 	}
+	switch(this.which_angle){
+		case 0:
+			this.set_horizontally();
+			break;
+		case 1:
+			this.set_diagonally_ul_and_lr();
+			break;
+		case 2:
+			this.set_vertically();
+			break;
+		case 3:
+			this.set_diagonally_ll_and_ur();
+			break;
+		default:
+			this.set_horizontally();
+	}
 	
 
 
-// };
+};
 
-// Char_Base.horizontal = 0;
-// Char_Base.diag1 = 1;
-// Char_Base.verticle = 2;
-// Char_Base.diag2 = 3;
+
 
 
 Char_Base.prototype.set_orientation_and_position = function(new_x,new_y){
 
-	//console.log("(set_orientation_and_position0");
-
-	// pw.print("new_x is: " + new_x);
-	// pw.print("new_y is: " + new_y);
+	// //pw.print("new_x is: " + new_x);
+	// //pw.print("new_y is: " + new_y);
 	// //pw.print("this.color is: " + this.color);
 
-	//only run this code if we're 
-	//if(this.old_mlc_x != new_x || this.old_mlc_y != new_y){
-
-	//console.log("this.which_angle is: " + this.which_angle);
-
-	// switch(this.which_angle){
-	// 	case Char_Base.horizontal:
-	// 		console.log("horizontal");
-	// 		this.set_horizontally(new_x,new_y);//up/down
-	// 		break;
-	// 	case Char_Base.diag1:
-	// 		console.log("ul and lr");
-	// 		this.set_diagonally_ul_and_lr(new_x,new_y);//diagonal 1
-	// 		break;
-	// 	case Char_Base.vertical:
-			// console.log("vertical");
-			// this.set_vertically(new_x,new_y);//left/right
-	// 		break;
-	// 	case Char_Base.diag2:
-			// console.log("")
-			// this.set_diagonally_ll_and_ur(new_x,new_y);//diagonal 2
-	// 		break;
-	// 	default:
-	// 		this.set_horizontally(new_x,new_y);
-	// }
-
-	if(this.which_angle == Char_Base.horizontal){
-			console.log("horizontal");
-			this.set_horizontally(new_x,new_y);//up/down
+	switch(this.which_angle){
+		case 0:
+			this.set_horizontally(new_x,new_y);
+			break;
+		case 1:
+			this.set_diagonally_ul_and_lr(new_x,new_y);
+			break;
+		case 2:
+			this.set_vertically(new_x,new_y);
+			break;
+		case 3:
+			this.set_diagonally_ll_and_ur(new_x,new_y);
+			break;
+		default:
+			this.set_horizontally(new_x,new_y);
 	}
-	else if(this.which_angle == Char_Base.diag1){
-			console.log("")
-			this.set_diagonally_ll_and_ur(new_x,new_y);//diagonal 1 (was 2)
-	}
-	else if(this.which_angle == Char_Base.vertical){
-			console.log("vertical");
-			this.set_vertically(new_x,new_y);//left/right
-	}
-	else if(this.which_angle == Char_Base.diag2){
-			console.log("ul and lr");
-			this.set_diagonally_ul_and_lr(new_x,new_y);//diagonal 2 (was 1)
-	}
-	else{
-			console.log("horizontal");
-			this.set_horizontally(new_x,new_y);//up/down		
-	}
-
-	// 	this.old_mlc_x = new_x;
-	// 	this.old_mlc_y = new_y;
-
-	// }
 
 	//this.draw_ssi();
-
-};
-
-
-
-Char_Base.prototype.draw_ssi_with_given_color = function(color){
-
-
-	for(var numx = 0; numx < this.tba.length; numx++){
-
-		for(var numy = 0; numy < this.tba[numx].length; numy++){
-
-			this.tba[numx][numy].draw_tb_with_provided_color(color);
-
-		}
-
-	};
-
-
-
-};
-
-Char_Base.prototype.test = function(){
-
-	for(var numx = 0; numx < this.tba.length; numx++){
-
-		for(var numy = 0; numy < this.tba[numx].length; numy++){
-
-			console.log("this.tba["+numx+"]["+numy+"].x is: " + this.tba[numx][numy].x);
-
-			console.log("this.tba["+numx+"]["+numy+"].y is: " + this.tba[numx][numy].y);
-
-		}
-
-	};
-
 
 };
 

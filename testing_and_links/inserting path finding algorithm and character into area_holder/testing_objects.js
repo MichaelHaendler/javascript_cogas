@@ -523,9 +523,9 @@ function test_vertical_character_base(){
 
 var person_w = 30;
 var person_l = 10
+var directions = ["h","v","d"];
 
-
-cbc = new Char_Base_Controller(person_w,person_l);
+cbc = new Char_Base_Controller(person_w,person_l,directions);
 
 
 
