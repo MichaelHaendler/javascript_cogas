@@ -24,7 +24,7 @@ function Terrain_Layer(layer,terrain_blocks_across,terrain_blocks_down){
 	//canvas height
 	this.c_h = this.tbh * Terrain_Block.h;
 
-
+	//number of squares
 	this.nos = (this.tbw >= this.tbh) ? this.tbw : this.tbh;
 
 	//biggest size. 
@@ -97,6 +97,7 @@ Terrain_Layer.prototype.init_ascii_tss = function(){
 	//algorithm which requires both w and h have to be the same. 
  	var tbc_s = Math.ceil(canvas_size/Terrain_Block.w);
 
+ 	//console.log("!!!!!!!!!!tbc_s is: " + tbc_s);
 
  	var tmp_array = [];
 
@@ -139,12 +140,8 @@ Terrain_Layer.prototype.new_Terrain_Square = function(x,y,w,l,h,
 	// 	tmp_ts.add_boundaries(ba);
 	// }
 
-	console.log("x is: " + x);
-	console.log("y is: " + y);
-
-	if(x == 36 && y == 0){
-		debugger;
-	}
+	// console.log("x is: " + x);
+	// console.log("y is: " + y);
 
 	// print_2d_array(tmp_ts.ascii_tba);
 
@@ -244,14 +241,28 @@ Terrain_Layer.prototype.add_terr_sq_to_layer = function(x,y,tmp_ts){
 
 	//if it doesn't equal to null that means there's an array there already. 
 	//so push the current square onto it. 
+
+	// console.log("TL x is: " + x);
+	// console.log("TL y is: " + y);
+
+
+	// if(x == 39 && y == 0){
+	// 	debugger;
+	// }
+
+
 	if(this.tss[x][y] != null){
+		//console.log("not null");
 		//console.log(this.tss[x][y]);
 		this.tss[x][y].push(tmp_ts);
 	}
 	else{
+		//console.log("null");
 		this.tss[x][y] = [];
 		this.tss[x][y].push(tmp_ts);
 	}
+
+	//console.log("getting here");
 
 	this.locs_of_terr_sqs.push([x,y]);
 
@@ -275,11 +286,17 @@ Terrain_Layer.prototype.add_to_ascii_tss = function(tmp_ts){
 
 	//console.log("z here is: " + z);
 
+	// console.log("tmp_ts.array_w is: " + tmp_ts.array_w);
+	// console.log("tmp_ts.array_l is: " + tmp_ts.array_l);
 
-	//console.log("tmp_ts.array_l is: " + tmp_ts.array_l);
+	//debugger;
 
 	//a width of 3
 	for(var x = 0; x < tmp_ts.array_w; x++){
+
+		var array_x = tmp_ts.get_x_loc_of_ts_on_tl_tb_array(x);
+
+		//console.log("!!!!!array_x is: " + array_x);
 
 		//a thickness of 1 tb. (so y only hits zero)
 		for(var y = 0; y < tmp_ts.array_l; y++){
@@ -293,14 +310,27 @@ Terrain_Layer.prototype.add_to_ascii_tss = function(tmp_ts){
 			// //same deal as with x and array_loc_x
 			// var array_y = tmp_ts.array_loc_y + y;
 
-			var array_x = tmp_ts.get_x_loc_of_ts_on_tl_tb_array(x);
-
 			var array_y = tmp_ts.get_y_loc_of_ts_on_tl_tb_array(y);
 
-			// console.log("array_x is: " + array_x);
-			// console.log("array_y is: " + array_y);
+			// console.log("this.tss["+array_x+"].length is: " + this.tss[array_x].length);
+			// console.log("this.ascii_tss["+array_x+"].length is: " + this.ascii_tss[array_x].length);
 
-			this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(z,array_x,array_y);
+
+			// if(array_x == 39 && array_y == 2){
+			// 	debugger;
+			// }
+
+			if(this.ascii_tss[array_x] instanceof Array){
+				// console.log("getting in here");
+				// console.log("array_x is: " + array_x);
+				// console.log("array_y is: " + array_y);
+				this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(z,array_x,array_y);
+			}
+			// else{
+			// 	console.log("NOT getting in here");
+			// 	console.log("!array_x is: " + array_x);
+			// 	console.log("!array_y is: " + array_y);				
+			// }
 
 			// if(this.ascii_tss[array_x][array_y] != non_replaceable_type){
 			// 	this.ascii_tss[array_x][array_y] = tmp_ts.get_ascii_terrain_block_type(z,x,y);

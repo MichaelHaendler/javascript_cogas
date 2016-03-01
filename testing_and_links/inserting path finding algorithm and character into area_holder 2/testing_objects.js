@@ -490,15 +490,15 @@ function area_holder_insert_rock(tmp_ah){
 
 function build_area_with_lots_of_grass_and_rocks(){
 
-	var tba = 35;
-	var tbd = 15;
+	var tba = 40;
+	var tbd = 40;
 
 	var tmp_ah = new Area_Holder(tba,tbd);
 
 
 	tmp_ah = area_holder_insert_grass_v2(tmp_ah);
 
-	//tmp_ah = area_holder_insert_rocks_v2(tmp_ah);
+	tmp_ah = area_holder_insert_rocks_v2(tmp_ah);
 
 
 	return tmp_ah;
@@ -508,8 +508,8 @@ function build_area_with_lots_of_grass_and_rocks(){
 function area_holder_insert_grass_v2(tmp_ah){
 
 	var which_layer = 0;
-	var tba = 35;
-	var tbd = 15;
+	var tba = 40;//terrain blocks across
+	var tbd = 40;//terrain blocks down
 	var tmp_th = new Terrain_Layer(which_layer,tba,tbd);
 	
 	var x = 5;
@@ -566,14 +566,19 @@ function area_holder_insert_grass_v2(tmp_ah){
 	// console.log("ba is: " + ba);
 	// console.log("which_layer is: " + which_layer);
 
+	// console.log("canvas_tb_w is: " + canvas_tb_w);
+	// console.log("canvas_tb_l is: " + canvas_tb_l);
+
+
 
 	for(var x = 0; x < canvas_tb_w; x+= grass_tb_w){
 
-		//console.log("x is: " + x);
+		
 
 		for(var y = 0; y < canvas_tb_l; y +=grass_tb_l){
 
-			//console.log("y is: " + y);
+			// console.log("x is: " + x);
+			// console.log("y is: " + y);
 
 			tmp_ah.add_square(x,
 							  y,
@@ -599,9 +604,9 @@ function area_holder_insert_rocks_v2(tmp_ah){
 
 	var which_layer = 0;
 
-	var tba = 35;
+	var tba = 40;
 
-	var tbd = 15;
+	var tbd = 40;
 
 	var r_x1 = 5;
 	var r_y1 = 5;
@@ -659,6 +664,8 @@ function area_holder_insert_rocks_v2(tmp_ah){
 };
 
 ah = build_area_with_lots_of_grass_and_rocks();
+
+print_3d_array(ah.get_3d_ascii_map());
 
 var mike = new Person();
 

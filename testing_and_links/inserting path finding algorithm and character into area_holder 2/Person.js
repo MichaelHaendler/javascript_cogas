@@ -1,0 +1,44 @@
+//30 wide, 40 tall. aka 3 wide, 4 tall. 1 thick. 
+
+function Person(){
+
+	//graphic of person
+	this.gop = new Character_Graphic();
+
+	//menu (holds items as well)
+	//this.menu = new Menu();
+
+	//this.menu.set_perp_wh_vals(this.gop.get_wah());
+
+	var w_and_h = this.gop.get_wah();
+
+	//this.menu.set_perp_wh_vals(w_and_h);
+
+	//each person should have a name. 
+	this.name = "default_name";
+
+	//things like scientist. solider. engineer. characters might have mutliple type.
+	//or maybe not. maybe I wont wind up using this at all. (shrugs)
+	this.char_type = "default_type";
+
+	// each person should have a face graphic
+	//this.face_picture = new SSI();
+
+	//attributes (not yet completely implemented)
+	//this.attr = new Attr();
+};
+
+Person.prototype.run = function(){
+
+	this.gop.run(g_direction,g_moved);
+
+	// var x_and_y = this.gop.get_x_and_y();
+
+	// this.menu.set_perp_xy_vals(x_and_y);
+
+	// this.menu.update(mx,my,mlc,gen_obj);
+
+	// this.menu.draw_ssi();
+};
+
+
